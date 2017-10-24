@@ -99,7 +99,7 @@
     <div class="scroll-container">
         <table class="table table-fixed header-fixed">
             <thead class="thead-inverse">
-            <th class="col-xs-4">Time</th>
+            <th class="col-xs-3">Time</th>
             <th class="col-xs-1">Summ</th>
             <th class="col-xs-1">Addobject</th>
             <th class="col-xs-1">EditObject</th>
