@@ -108,6 +108,7 @@
             <th class="col-xs-1">GetForm</th>
             <th class="col-xs-1">GetDtObject</th>
             <th class="col-xs-1">Search</th>
+            <th class="col-xs-1">getCatalogsActions</th>
             </thead>
             <tbody>
             <% for (int i = 0; i < times.length; i++) {%>
