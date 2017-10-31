@@ -1,0 +1,14 @@
+#header-container {
+    padding: 10px;
+}
+
+#open-parser-window {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}

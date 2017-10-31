@@ -1,4 +1,4 @@
-package ru.naumen.sd40.log.parser;
+package ru.naumen.perfhouse.parser;
 
 /**
  * Created by doki on 22.10.16.

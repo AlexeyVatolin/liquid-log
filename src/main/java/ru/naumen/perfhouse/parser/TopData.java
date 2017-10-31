@@ -1,7 +1,4 @@
-package ru.naumen.sd40.log.parser;
-
-import static ru.naumen.sd40.log.parser.NumberUtils.getSafeDouble;
-import static ru.naumen.sd40.log.parser.NumberUtils.roundToTwoPlaces;
+package ru.naumen.perfhouse.parser;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;;
 
@@ -38,31 +35,31 @@ public class TopData
 
     public double getAvgLa()
     {
-        return roundToTwoPlaces(getSafeDouble(laStat.getMean()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(laStat.getMean()));
     }
 
     public double getAvgCpuUsage()
     {
-        return roundToTwoPlaces(getSafeDouble(cpuStat.getMean()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(cpuStat.getMean()));
     }
 
     public double getAvgMemUsage()
     {
-        return roundToTwoPlaces(getSafeDouble(memStat.getMean()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(memStat.getMean()));
     }
 
     public double getMaxLa()
     {
-        return roundToTwoPlaces(getSafeDouble(laStat.getMax()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(laStat.getMax()));
     }
 
     public double getMaxCpu()
     {
-        return roundToTwoPlaces(getSafeDouble(cpuStat.getMax()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(cpuStat.getMax()));
     }
 
     public double getMaxMem()
     {
-        return roundToTwoPlaces(getSafeDouble(memStat.getMax()));
+        return NumberUtils.roundToTwoPlaces(NumberUtils.getSafeDouble(memStat.getMax()));
     }
 }

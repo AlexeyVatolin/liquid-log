@@ -39,10 +39,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import ru.naumen.perfhouse.statdata.Constants;
-import ru.naumen.sd40.log.parser.ActionDoneParser;
-import ru.naumen.sd40.log.parser.ErrorParser;
-import ru.naumen.sd40.log.parser.GCParser;
-import ru.naumen.sd40.log.parser.TopData;
+import ru.naumen.perfhouse.parser.ActionDoneParser;
+import ru.naumen.perfhouse.parser.ErrorParser;
+import ru.naumen.perfhouse.parser.GCParser;
+import ru.naumen.perfhouse.parser.TopData;
 
 /**
  * Created by doki on 24.10.16.
