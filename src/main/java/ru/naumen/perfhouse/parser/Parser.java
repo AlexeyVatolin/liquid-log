@@ -16,7 +16,6 @@ import ru.naumen.perfhouse.parser.GCParser.GCTimeParser;
 
 import javax.inject.Inject;
 
-@Component
 public class Parser {
 
     public static void parse(String dbName, String parsingMode, String pathToLog, String timeZone, Boolean needLog, InfluxDAO storage)
