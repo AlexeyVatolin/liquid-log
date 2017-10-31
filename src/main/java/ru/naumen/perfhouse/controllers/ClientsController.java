@@ -1,6 +1,7 @@
 package ru.naumen.perfhouse.controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ru.naumen.perfhouse.influx.InfluxDAO;
+import ru.naumen.perfhouse.parser.Parser;
 
 /**
  * Created by dkirpichenkov on 26.10.16.
@@ -41,10 +43,10 @@ public class ClientsController
     public ModelAndView index()
     {
         List<String> clients = influxDAO.getDbList();
-        HashMap<String, Object> clientLast864Links = new HashMap<>();
+        HashMap<String, Object> clientLast3DaysLinks = new HashMap<>();
         HashMap<String, Object> clientLinks = new HashMap<>();
         HashMap<String, Object> clientMonthLinks = new HashMap<>();
-        HashMap<String, Object> clientLast2016Links = new HashMap<>();
+        HashMap<String, Object> clientLastWeekLinks = new HashMap<>();
         HashMap<String, Object> clientPreviousMonthLinks = new HashMap<>();
 
         DateTime now = DateTime.now();
@@ -58,16 +60,16 @@ public class ClientsController
             clientMonthLinks.put(it, "/history/" + it + "/" + now.getYear() + "/" + now.getMonthOfYear());
             clientPreviousMonthLinks.put(it,
                     "/history/" + it + "/" + prevMonth.getYear() + "/" + prevMonth.getMonthOfYear());
-            clientLast864Links.put(it, "/history/" + it + "?count=864");
-            clientLast2016Links.put(it, "/history/" + it + "?count=2016");
+            clientLast3DaysLinks.put(it, "/history/" + it + "?count=864");
+            clientLastWeekLinks.put(it, "/history/" + it + "?count=2016");
         });
 
         HashMap<String, Object> model = new HashMap<>();
         model.put("clients", clients);
         model.put("links", clientLinks);
         model.put("monthlinks", clientMonthLinks);
-        model.put("last864links", clientLast864Links);
-        model.put("last2016links", clientLast2016Links);
+        model.put("last864links", clientLast3DaysLinks);
+        model.put("last2016links", clientLastWeekLinks);
         model.put("prevMonthLinks", clientPreviousMonthLinks);
 
         return new ModelAndView("clients", model, HttpStatus.OK);
@@ -91,5 +93,23 @@ public class ClientsController
             LOG.error(ex.toString(), ex);
             throw ex;
         }
+    }
+
+    @RequestMapping(path = "/parser/parse", method = RequestMethod.POST)
+    public void postClientStatFormat1( HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
+        String dbName = request.getParameter("DBName");
+        String parsingMode = request.getParameter("parsingMode");
+        String filePath = request.getParameter("filePath");
+        String timeZone = request.getParameter("timeZone");
+        Boolean needLog = request.getParameter("needLog").equals("true");
+
+        try {
+            Parser.parse(dbName, parsingMode, filePath, timeZone, needLog , influxDAO);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }

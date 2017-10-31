@@ -1,4 +1,4 @@
-package ru.naumen.sd40.log.parser;
+package ru.naumen.perfhouse.parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

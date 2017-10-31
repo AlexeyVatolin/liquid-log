@@ -1,7 +1,7 @@
-package ru.naumen.sd40.log.parser;
+package ru.naumen.perfhouse.parser;
 
-import static ru.naumen.sd40.log.parser.NumberUtils.getSafeDouble;
-import static ru.naumen.sd40.log.parser.NumberUtils.roundToTwoPlaces;
+import static ru.naumen.perfhouse.parser.NumberUtils.getSafeDouble;
+import static ru.naumen.perfhouse.parser.NumberUtils.roundToTwoPlaces;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
