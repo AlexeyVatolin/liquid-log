@@ -14,38 +14,35 @@ function setupModal(client) {
 }
 
 $(document).ready(function () {
-    $("#parse").click(function () {
+    $("#myForm").submit(function () {
         event.preventDefault();
-        $("#parse").button('loading');
         $("#parseModal").modal("hide");
         $("#pleaseWaitDialog").modal("show");
-
-        var DBName = $("#DBName").val();
-        var parsingMode = $("#parsingMode").find("option:selected" ).text();
-        var filePath = $("#filePath").val();
-        var timeZone = $("#timeZone").find("option:selected" ).text();
-        var needLog = $("#needLog").is(":checked");
+        var data = new FormData($(this)[0]);
+        data.append("needLog", $("needLog").is(":checked"));
 
         $.ajax({
             type: "POST",
             url: "/parser/parse",
             enctype: 'multipart/form-data',
-            data: {
-                DBName: DBName,
-                parsingMode: parsingMode,
-                filePath: filePath,
-                timeZone: timeZone,
-                needLog: needLog
-            },
+            data: data,
+            contentType: false,
+            processData: false,
             success: function () {
-                $("#loading-header").text("Success!")
+                $("#loading-header").text("Success!");
+                $("#loading-ok-button").click(function () {
+                    window.location.reload();
+                })
             },
-            error: function () {
-                $("#loading-header").text("Error!")
+            error: function (response) {
+                $("#loading-header").text("Error!");
+                $("#returned-message").html(response.responseJSON.error + "</br>" + response.responseJSON.exception);
             },
             complete: function () {
                 $("#loading-ok-button").removeClass("hidden");
             }
         });
     });
+
 });
+
