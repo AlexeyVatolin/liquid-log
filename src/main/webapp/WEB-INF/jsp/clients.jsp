@@ -203,7 +203,6 @@
             </div>
             <div class="modal-body">
                 <code id="returned-message">
-
                 </code>
             </div>
             <div class="modal-footer">

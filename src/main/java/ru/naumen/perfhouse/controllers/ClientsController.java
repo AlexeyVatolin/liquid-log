@@ -46,7 +46,6 @@ public class ClientsController
     {
         this.influxDAO = influxDAO;
         this.parser = parser;
-
     }
 
     @RequestMapping(path = "/")
@@ -110,13 +109,16 @@ public class ClientsController
                                       @RequestParam("parsingMode") String parsingMode,
                                       @RequestParam("file") MultipartFile file,
                                       @RequestParam("timeZone") String timeZone,
-                                      @RequestParam("needLog") Boolean needLog,
-                                      HttpServletResponse response){
-        try {
+                                      @RequestParam("needLog") Boolean needLog) throws IOException, ParseException {
+        try
+        {
             InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream());
             parser.parse(dbName, parsingMode, timeZone, needLog, inputStreamReader);
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        }
+        catch (ParseException | IOException ex)
+        {
+            LOG.error(ex.toString(), ex);
+            throw ex;
         }
     }
 }

@@ -18,7 +18,7 @@ $(document).ready(function () {
         event.preventDefault();
         $("#parseModal").modal("hide");
         $("#pleaseWaitDialog").modal("show");
-        var data = new FormData($(this)[0]);
+        let data = new FormData($(this)[0]);
         data.append("needLog", $("needLog").is(":checked"));
 
         $.ajax({
