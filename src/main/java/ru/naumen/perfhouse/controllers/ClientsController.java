@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -99,15 +96,15 @@ public class ClientsController
     }
 
     @RequestMapping(path = "/parser/parse", method = RequestMethod.POST)
+    @ResponseBody
     public void postClientStatFormat1(@RequestParam("DBName") String dbName,
                                       @RequestParam("parsingMode") String parsingMode,
                                       @RequestParam("file") MultipartFile file,
                                       @RequestParam("timeZone") String timeZone,
                                       @RequestParam("needLog") Boolean needLog) throws IOException, ParseException {
-        try
+        try (InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream()))
         {
             String fileName = file.getOriginalFilename();
-            InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream());
             parser.parse(dbName, parsingMode, timeZone, needLog, fileName, inputStreamReader);
         }
         catch (ParseException | IOException ex)
