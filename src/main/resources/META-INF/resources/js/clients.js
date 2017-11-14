@@ -32,7 +32,7 @@ $(document).ready(function () {
                 $("#loading-header").text("Success!");
                 $("#loading-ok-button").click(function () {
                     window.location.reload();
-                })
+                });
             },
             error: function (response) {
                 $("#loading-header").text("Error!");

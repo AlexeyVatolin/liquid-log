@@ -2,7 +2,8 @@ package ru.naumen.sd40.log.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.naumen.perfhouse.parser.ActionDoneParser;
+import ru.naumen.perfhouse.parser.data.DataSet;
+import ru.naumen.perfhouse.parser.dataParsers.ActionDoneParser;
 
 public class ActionDoneParserTest {
 
@@ -10,43 +11,51 @@ public class ActionDoneParserTest {
     public void mustParseAddAction() {
         //given
         ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when
         parser.parseLine("Done(10): AddObjectAction");
 
         //then
-        Assert.assertEquals(1, parser.getAddObjectActions());
+        Assert.assertEquals(1, dataSet.getActionsDone().getAddObjectActions());
     }
 
     @Test
     public void mustParseFormActions() {
         //given
         ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when
         parser.parseLine("Done(10): GetFormAction");
         parser.parseLine("Done(1): GetAddFormContextDataAction");
 
         //then
-        Assert.assertEquals(2, parser.getFormActions());
+        Assert.assertEquals(2, dataSet.getActionsDone().getFormActions());
     }
 
     @Test
     public void mustParseEditObject() {
         //given
-        ActionDoneParser parser=  new ActionDoneParser();
+        ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when
         parser.parseLine("Done(10): EditObjectAction");
 
         //then
-        Assert.assertEquals(1, parser.getEditObjectsActions());
+        Assert.assertEquals(1, dataSet.getActionsDone().getEditObjectsActions());
     }
 
     @Test
     public void mustParseSearchObject(){
         //given
         ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when
         parser.parseLine("Done(10): GetPossibleAgreementsChildsSearchAction");
@@ -58,13 +67,15 @@ public class ActionDoneParserTest {
         parser.parseLine("Done(10): ExtendedSearchByFilterAction");
 
         //then
-        Assert.assertEquals(7, parser.getSearchActions());
+        Assert.assertEquals(7, dataSet.getActionsDone().getSearchActions());
     }
 
     @Test
     public void mustParseGetList(){
         //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when:
         parser.parseLine("Done(10): GetDtObjectListAction");
@@ -76,13 +87,15 @@ public class ActionDoneParserTest {
         parser.parseLine("Done(10): GetDtObjectForRelObjListAction");
 
         //then:
-        Assert.assertEquals(7, parser.geListActions());
+        Assert.assertEquals(7, dataSet.getActionsDone().geListActions());
     }
 
     @Test
     public void mustParseComment(){
         //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when:
         parser.parseLine("Done(10): EditCommentAction");
@@ -93,13 +106,15 @@ public class ActionDoneParserTest {
         parser.parseLine("Done(10): GetCommentDtObjectTemplateAction");
 
         //then:
-        Assert.assertEquals(6, parser.getCommentActions());
+        Assert.assertEquals(6, dataSet.getActionsDone().getCommentActions());
     }
 
     @Test
     public void mustParseDtObject(){
         //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        ActionDoneParser parser = new ActionDoneParser();
+        DataSet dataSet = new DataSet();
+        parser.setDataSet(dataSet);
 
         //when:
         parser.parseLine("Done(10): GetVisibleDtObjectAction");
@@ -109,7 +124,6 @@ public class ActionDoneParserTest {
         parser.parseLine("Done(10): GetDtObjectTemplateAction");
 
         //then:
-        Assert.assertEquals(5, parser.getDtObjectActions());
+        Assert.assertEquals(5, dataSet.getActionsDone().getDtObjectActions());
     }
-
 }

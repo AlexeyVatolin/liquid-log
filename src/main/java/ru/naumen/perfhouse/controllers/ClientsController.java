@@ -1,17 +1,5 @@
 package ru.naumen.perfhouse.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
@@ -24,12 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.Parser;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by dkirpichenkov on 26.10.16.
@@ -112,8 +106,9 @@ public class ClientsController
                                       @RequestParam("needLog") Boolean needLog) throws IOException, ParseException {
         try
         {
+            String fileName = file.getOriginalFilename();
             InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream());
-            parser.parse(dbName, parsingMode, timeZone, needLog, inputStreamReader);
+            parser.parse(dbName, parsingMode, timeZone, needLog, fileName, inputStreamReader);
         }
         catch (ParseException | IOException ex)
         {

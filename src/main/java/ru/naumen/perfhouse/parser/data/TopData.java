@@ -1,6 +1,7 @@
-package ru.naumen.perfhouse.parser;
+package ru.naumen.perfhouse.parser.data;
 
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import ru.naumen.perfhouse.parser.NumberUtils;;
 
 /**
  * Cpu usage data, acquired from top output
@@ -28,7 +29,7 @@ public class TopData
         memStat.addValue(mem);
     }
 
-    public boolean isNan()
+    public boolean isEmpty()
     {
         return laStat.getN() == 0 && cpuStat.getN() == 0 && memStat.getN() == 0;
     }

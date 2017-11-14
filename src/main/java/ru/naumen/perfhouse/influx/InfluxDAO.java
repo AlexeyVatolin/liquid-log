@@ -38,11 +38,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import ru.naumen.perfhouse.parser.data.ActionDoneData;
+import ru.naumen.perfhouse.parser.data.ErrorData;
+import ru.naumen.perfhouse.parser.data.GCData;
 import ru.naumen.perfhouse.statdata.Constants;
-import ru.naumen.perfhouse.parser.ActionDoneParser;
-import ru.naumen.perfhouse.parser.ErrorParser;
-import ru.naumen.perfhouse.parser.GCParser;
-import ru.naumen.perfhouse.parser.TopData;
+import ru.naumen.perfhouse.parser.data.TopData;
 
 /**
  * Created by doki on 24.10.16.
@@ -107,8 +107,8 @@ public class InfluxDAO
         return BatchPoints.database(dbName).build();
     }
 
-    public void storeActionsFromLog(BatchPoints batch, String dbName, long date, ActionDoneParser dones,
-            ErrorParser errors)
+    public void storeActionsFromLog(BatchPoints batch, String dbName, long date, ActionDoneData dones,
+            ErrorData errors)
     {
         //@formatter:off
         Builder builder = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
@@ -176,7 +176,7 @@ public class InfluxDAO
         }
     }
 
-    public void storeGc(BatchPoints batch, String dbName, long date, GCParser gc)
+    public void storeGc(BatchPoints batch, String dbName, long date, GCData gc)
     {
         Point point = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
                 .addField(GCTIMES, gc.getGcTimes()).addField(AVARAGE_GC_TIME, gc.getCalculatedAvg())

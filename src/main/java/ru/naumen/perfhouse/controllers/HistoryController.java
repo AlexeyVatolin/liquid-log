@@ -104,7 +104,7 @@ public class HistoryController
     public ModelAndView indexLast864(@PathVariable("client") String client,
             @RequestParam(name = "count", defaultValue = "864") int count) throws ParseException
     {
-        ru.naumen.perfhouse.statdata.StatData d = service.getData(client, DataType.RESPONSE, count);
+        StatData d = service.getData(client, DataType.RESPONSE, count);
 
         if (d == null)
         {
@@ -128,7 +128,7 @@ public class HistoryController
     private ModelAndView getDataAndView(String client, DataType dataType, int count, String viewName)
             throws ParseException
     {
-        ru.naumen.perfhouse.statdata.StatData data = service.getData(client, dataType, count);
+        StatData data = service.getData(client, dataType, count);
         if (data == null)
         {
             return new ModelAndView(NO_HISTORY_VIEW);
@@ -148,7 +148,7 @@ public class HistoryController
     private ModelAndView getDataAndViewByDate(String client, DataType type, int year, int month, int day,
             String viewName, boolean compress) throws ParseException
     {
-        ru.naumen.perfhouse.statdata.StatData dataDate = service.getDataDate(client, type, year, month, day);
+        StatData dataDate = service.getDataDate(client, type, year, month, day);
         if (dataDate == null)
         {
             return new ModelAndView(NO_HISTORY_VIEW);
