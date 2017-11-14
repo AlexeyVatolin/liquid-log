@@ -3,6 +3,7 @@ package ru.naumen.perfhouse.parser;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -21,8 +22,6 @@ public class TopParser
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH:mm");
 
     private String dataDate;
-    private String fileName;
-
     private Map<Long, DataSet> existing;
 
     private Pattern timeRegex = Pattern.compile("^_+ (\\S+)");
@@ -41,7 +40,6 @@ public class TopParser
             throw new IllegalArgumentException();
         }
         this.dataDate = matcher.group(0).replaceAll("-", "");
-        this.fileName = file;
         this.existing = existingDataSet;
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -52,9 +50,9 @@ public class TopParser
         sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
     }
 
-    public void parse() throws IOException, ParseException
+    public void parse(InputStreamReader inputStreamReader) throws IOException, ParseException
     {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName)))
+        try (BufferedReader br = new BufferedReader(inputStreamReader))
         {
             String line;
             while ((line = br.readLine()) != null)

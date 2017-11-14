@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.GCParser.GCTimeParser;
 
@@ -28,9 +29,8 @@ public class Parser {
         this.influxDAO = influxDAO;
     }
 
-    public void parse(String dbName, String parsingMode, String timeZone, Boolean needLog, InputStreamReader logStreamReader)
-            throws IOException, ParseException {
-        String pathToLog = "";
+    public void parse(String dbName, String parsingMode, String timeZone, Boolean needLog, String fileName,
+                      InputStreamReader logStreamReader) throws IOException, ParseException {
         dbName = dbName.replaceAll("-", "_");
         influxDAO.connectToDB(dbName);
 
@@ -80,10 +80,10 @@ public class Parser {
                 }
                 break;
             case "top":
-                TopParser topParser = new TopParser(pathToLog, data);
+                TopParser topParser = new TopParser(fileName, data);
                 topParser.configureTimeZone(timeZone);
                 //parse top
-                topParser.parse();
+                topParser.parse(logStreamReader);
                 break;
             default:
                 throw new IllegalArgumentException(
