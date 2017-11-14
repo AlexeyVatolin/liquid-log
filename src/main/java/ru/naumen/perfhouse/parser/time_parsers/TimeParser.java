@@ -1,4 +1,4 @@
-package ru.naumen.perfhouse.parser.timeParsers;
+package ru.naumen.perfhouse.parser.time_parsers;
 
 import java.text.ParseException;
 

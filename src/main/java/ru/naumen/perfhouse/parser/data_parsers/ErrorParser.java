@@ -1,6 +1,5 @@
-package ru.naumen.perfhouse.parser.dataParsers;
+package ru.naumen.perfhouse.parser.data_parsers;
 
-import ru.naumen.perfhouse.parser.dataParsers.DataParser;
 import ru.naumen.perfhouse.parser.data.DataSet;
 import ru.naumen.perfhouse.parser.data.ErrorData;
 
@@ -19,15 +18,15 @@ public class ErrorParser implements DataParser
         ErrorData errorData = dataSet.getErrors();
         if (warnRegEx.matcher(line).find())
         {
-            errorData.IncrementWarnCount();
+            errorData.incrementWarnCount();
         }
         if (errorRegEx.matcher(line).find())
         {
-            errorData.IncrementErrorCount();
+            errorData.incrementErrorCount();
         }
         if (fatalRegEx.matcher(line).find())
         {
-            errorData.IncrementFatalCount();
+            errorData.incrementFatalCount();
         }
     }
 

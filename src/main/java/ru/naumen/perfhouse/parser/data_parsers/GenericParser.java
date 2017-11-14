@@ -1,7 +1,6 @@
-package ru.naumen.perfhouse.parser.dataParsers;
+package ru.naumen.perfhouse.parser.data_parsers;
 
 import ru.naumen.perfhouse.parser.data.DataSet;
-import ru.naumen.perfhouse.parser.dataParsers.DataParser;
 
 public class GenericParser implements DataParser {
     private DataParser[] dataParsers;

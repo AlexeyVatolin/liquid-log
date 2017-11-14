@@ -7,12 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ActionDoneData {
-    public ActionDoneData() {
-        EXCLUDED_ACTIONS = new HashSet<>();
-        EXCLUDED_ACTIONS.add("EventAction".toLowerCase());
-    }
-
-    private Set<String> EXCLUDED_ACTIONS;
+        private Set<String> EXCLUDED_ACTIONS;
     private ArrayList<Integer> times = new ArrayList<>();
     private double min;
     private double mean;
@@ -34,6 +29,11 @@ public class ActionDoneData {
     private int searchActions = 0;
 
     private boolean nan = true;
+
+    public ActionDoneData() {
+        EXCLUDED_ACTIONS = new HashSet<>();
+        EXCLUDED_ACTIONS.add("EventAction".toLowerCase());
+    }
 
     public void calculate()
     {

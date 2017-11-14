@@ -3,7 +3,7 @@ package ru.naumen.sd40.log.parser;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.naumen.perfhouse.parser.data.DataSet;
-import ru.naumen.perfhouse.parser.dataParsers.ActionDoneParser;
+import ru.naumen.perfhouse.parser.data_parsers.ActionDoneParser;
 
 public class ActionDoneParserTest {
 

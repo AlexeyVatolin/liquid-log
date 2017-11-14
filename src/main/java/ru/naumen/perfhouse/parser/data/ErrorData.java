@@ -5,17 +5,17 @@ public class ErrorData {
     private long errorCount;
     private long fatalCount;
 
-    public void IncrementWarnCount()
+    public void incrementWarnCount()
     {
         warnCount++;
     }
 
-    public void IncrementErrorCount()
+    public void incrementErrorCount()
     {
         errorCount++;
     }
 
-    public void IncrementFatalCount()
+    public void incrementFatalCount()
     {
         fatalCount++;
     }

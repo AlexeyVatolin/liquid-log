@@ -1,6 +1,5 @@
-package ru.naumen.perfhouse.parser.dataParsers;
+package ru.naumen.perfhouse.parser.data_parsers;
 
-import ru.naumen.perfhouse.parser.dataParsers.DataParser;
 import ru.naumen.perfhouse.parser.data.ActionDoneData;
 import ru.naumen.perfhouse.parser.data.DataSet;
 

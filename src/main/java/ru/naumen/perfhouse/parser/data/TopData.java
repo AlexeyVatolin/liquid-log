@@ -1,7 +1,7 @@
 package ru.naumen.perfhouse.parser.data;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import ru.naumen.perfhouse.parser.NumberUtils;;
+import ru.naumen.perfhouse.parser.NumberUtils;
 
 /**
  * Cpu usage data, acquired from top output
