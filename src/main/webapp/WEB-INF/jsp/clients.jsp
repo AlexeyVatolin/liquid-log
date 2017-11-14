@@ -120,23 +120,23 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="DBName">Database name</label>
-                        <input type="text" class="form-control" id="DBName" name="from">
+                        <input type="text" class="form-control" id="DBName" name="DBName">
                     </div>
                     <div class="form-group">
                         <label for="parsingMode">Parsing mode</label>
-                        <select name="parsingMode" id="parsingMode" class="form-control">
+                        <select id="parsingMode" class="form-control" name="parsingMode">
                             <option>sdng</option>
                             <option>gc</option>
                             <option>top</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="filePath">Log file path</label>
-                        <input class="form-control" type="text" id="filePath" name="maxResults">
+                        <label for="file">Choose log file</label>
+                        <input class="form-control" type="file" id="file" name="file">
                     </div>
                     <div class="form-group">
                         <label for="timeZone">Time zone</label>
-                        <select name="parsingMode" id="timeZone" class="form-control">
+                        <select id="timeZone" class="form-control" name="timeZone">
                             <option>GMT-12:00</option>
                             <option>GMT-11:00</option>
                             <option>GMT-10:00</option>
@@ -180,9 +180,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Print log
-                            <input type="checkbox" id="needLog">
-                        </label>
+                        <input type="checkbox" id="needLog" name="needLog">
+                        <label for="needLog">Print log</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -195,14 +194,20 @@
 </div>
 
 
-<div class="modal fade" id="pleaseWaitDialog" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="loading-header" aria-hidden="true">
+<div class="modal fade" id="pleaseWaitDialog" tabindex="-1" data-backdrop="static" role="dialog"
+     aria-labelledby="loading-header" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 id="loading-header">Processing...</h1>
             </div>
+            <div class="modal-body">
+                <code id="returned-message">
+                </code>
+            </div>
             <div class="modal-footer">
-                <button type="button" id="loading-ok-button" data-dismiss="modal" class="btn hidden">OK</button>
+                <button type="button" id="loading-ok-button" data-dismiss="modal" class="btn hidden">OK
+                </button>
             </div>
         </div>
     </div>

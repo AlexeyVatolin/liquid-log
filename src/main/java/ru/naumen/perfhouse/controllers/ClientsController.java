@@ -1,8 +1,11 @@
 package ru.naumen.perfhouse.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,9 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -32,11 +36,13 @@ public class ClientsController
 {
     private Logger LOG = LoggerFactory.getLogger(ClientsController.class);
     private InfluxDAO influxDAO;
+    private Parser parser;
 
     @Inject
-    public ClientsController(InfluxDAO influxDAO)
+    public ClientsController(InfluxDAO influxDAO, Parser parser)
     {
         this.influxDAO = influxDAO;
+        this.parser = parser;
     }
 
     @RequestMapping(path = "/")
@@ -96,20 +102,21 @@ public class ClientsController
     }
 
     @RequestMapping(path = "/parser/parse", method = RequestMethod.POST)
-    public void postClientStatFormat1( HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
-        String dbName = request.getParameter("DBName");
-        String parsingMode = request.getParameter("parsingMode");
-        String filePath = request.getParameter("filePath");
-        String timeZone = request.getParameter("timeZone");
-        Boolean needLog = request.getParameter("needLog").equals("true");
-
-        try {
-            Parser.parse(dbName, parsingMode, filePath, timeZone, needLog , influxDAO);
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    @ResponseBody
+    public void parseSendedFile(@RequestParam("DBName") String dbName,
+                                      @RequestParam("parsingMode") String parsingMode,
+                                      @RequestParam("file") MultipartFile file,
+                                      @RequestParam("timeZone") String timeZone,
+                                      @RequestParam("needLog") Boolean needLog) throws IOException, ParseException {
+        try (InputStreamReader logStreamReader = new InputStreamReader(file.getInputStream()))
+        {
+            String fileName = file.getOriginalFilename();
+            parser.parse(dbName, parsingMode, timeZone, needLog, fileName, logStreamReader);
         }
-        response.setStatus(HttpServletResponse.SC_OK);
+        catch (ParseException | IOException ex)
+        {
+            LOG.error(ex.toString(), ex);
+            throw ex;
+        }
     }
 }
