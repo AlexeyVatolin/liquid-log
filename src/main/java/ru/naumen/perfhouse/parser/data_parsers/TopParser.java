@@ -15,9 +15,7 @@ public class TopParser implements DataParser
     private Pattern cpuAndMemPattren = Pattern
             .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java");
 
-    private DataSet dataSet;
-
-    public void parseLine(String line)
+    public void parseLine(DataSet dataSet, String line)
     {
         //get la
         Matcher la = Pattern.compile(".*load average:(.*)").matcher(line);
@@ -34,11 +32,6 @@ public class TopParser implements DataParser
             dataSet.cpuData().addCpu(Double.valueOf(cpuAndMemMatcher.group(1)));
             dataSet.cpuData().addMem(Double.valueOf(cpuAndMemMatcher.group(2)));
         }
-    }
-
-    @Override
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
     }
 
 }

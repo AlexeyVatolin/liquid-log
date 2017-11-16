@@ -11,6 +11,7 @@ public class TopTimeParser implements TimeParser {
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
     private Pattern timeRegex = Pattern.compile("^_+ (\\S+)");
     private String dataDate;
+    private long currentTime;
 
     public TopTimeParser(String fileName)
     {
@@ -28,9 +29,10 @@ public class TopTimeParser implements TimeParser {
         Matcher matcher = timeRegex.matcher(line);
         if (matcher.find())
         {
-            return DATE_FORMAT.parse(dataDate + matcher.group(1)).getTime();
+            currentTime = DATE_FORMAT.parse(dataDate + matcher.group(1)).getTime();
+            return currentTime;
         }
-        return 0L;
+        return currentTime;
     }
 
     private String parseDate(String fileName)

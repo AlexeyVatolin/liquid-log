@@ -51,11 +51,11 @@ public class Parser {
             case "gc":
                 //parse gc log
                 timeParser = new GCTimeParser(timeZone);
-                dataParser = new GenericParser(new GCParser());
+                dataParser = new GCParser();
                 break;
             case "top":
                 timeParser = new TopTimeParser(fileName);
-                dataParser = new GenericParser(new TopParser());
+                dataParser = new TopParser();
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -67,16 +67,16 @@ public class Parser {
             while ((line = br.readLine()) != null) {
                 long time = timeParser.parseLine(line);
 
-                if (time != 0) {
-                    int min5 = 5 * 60 * 1000;
-                    long count = time / min5;
-                    long key = count * min5;
-
-                    DataSet dataSet = data.computeIfAbsent(key, k -> new DataSet());
-                    dataParser.setDataSet(dataSet);
+                if (time == 0) {
+                    continue;
                 }
 
-                dataParser.parseLine(line);
+                int min5 = 5 * 60 * 1000;
+                long count = time / min5;
+                long key = count * min5;
+
+                DataSet dataSet = data.computeIfAbsent(key, k -> new DataSet());
+                dataParser.parseLine(dataSet, line);
             }
         }
 

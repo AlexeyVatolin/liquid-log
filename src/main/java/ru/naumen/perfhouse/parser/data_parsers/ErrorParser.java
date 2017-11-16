@@ -11,9 +11,7 @@ public class ErrorParser implements DataParser
     private Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) ERROR");
     private Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) FATAL");
 
-    private DataSet dataSet;
-
-    public void parseLine(String line)
+    public void parseLine(DataSet dataSet, String line)
     {
         ErrorData errorData = dataSet.getErrors();
         if (warnRegEx.matcher(line).find())
@@ -29,11 +27,5 @@ public class ErrorParser implements DataParser
             errorData.incrementFatalCount();
         }
     }
-
-    @Override
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
-
 
 }

@@ -9,9 +9,8 @@ import java.util.regex.Pattern;
 public class ActionDoneParser implements DataParser
 {
     private Pattern doneRegEx = Pattern.compile("Done\\((\\d+)\\): ?(.*?Action)");
-    private DataSet dataSet;
 
-    public void parseLine(String line)
+    public void parseLine(DataSet dataSet, String line)
     {
         ActionDoneData actionDoneData = dataSet.getActionsDone();
         Matcher matcher = doneRegEx.matcher(line);
@@ -62,8 +61,4 @@ public class ActionDoneParser implements DataParser
         }
     }
 
-    @Override
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
 }

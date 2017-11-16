@@ -10,18 +10,10 @@ public class GenericParser implements DataParser {
     }
 
     @Override
-    public void parseLine(String line) {
+    public void parseLine(DataSet dataSet, String line) {
         for (DataParser dataParser: dataParsers)
         {
-           dataParser.parseLine(line);
-        }
-    }
-
-    @Override
-    public void setDataSet(DataSet dataSet) {
-        for (DataParser dataParser: dataParsers)
-        {
-            dataParser.setDataSet(dataSet);
+           dataParser.parseLine(dataSet, line);
         }
     }
 }
