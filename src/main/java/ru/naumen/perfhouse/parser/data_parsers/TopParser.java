@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class TopParser implements DataParser
 {
-    private Pattern cpuAndMemPattren = Pattern
+    private static final Pattern cpuAndMemPattren = Pattern
             .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java");
 
     public void parseLine(DataSet dataSet, String line)

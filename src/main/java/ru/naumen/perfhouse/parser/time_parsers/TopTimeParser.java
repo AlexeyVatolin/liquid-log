@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 
 public class TopTimeParser implements TimeParser {
 
-    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
-    private Pattern timeRegex = Pattern.compile("^_+ (\\S+)");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
+    private static final Pattern timeRegex = Pattern.compile("^_+ (\\S+)");
     private String dataDate;
     private long currentTime;
 

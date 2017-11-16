@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ActionDoneData {
-        private Set<String> EXCLUDED_ACTIONS;
+    private Set<String> EXCLUDED_ACTIONS;
     private ArrayList<Integer> times = new ArrayList<>();
     private double min;
     private double mean;

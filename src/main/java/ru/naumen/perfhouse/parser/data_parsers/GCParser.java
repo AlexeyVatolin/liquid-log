@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class GCParser implements DataParser
 {
-    private Pattern gcExecutionTime = Pattern.compile(".*real=(.*)secs.*");
+    private static final Pattern gcExecutionTime = Pattern.compile(".*real=(.*)secs.*");
 
     public void parseLine(DataSet dataSet, String line)
     {
