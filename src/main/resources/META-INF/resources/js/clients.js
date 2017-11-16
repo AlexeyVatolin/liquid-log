@@ -18,21 +18,21 @@ $(document).ready(function () {
         event.preventDefault();
         $("#parseModal").modal("hide");
         $("#pleaseWaitDialog").modal("show");
-        let data = new FormData($(this)[0]);
-        data.append("needLog", $("needLog").is(":checked"));
+        let formData = new FormData($(this)[0]);
+        formData.append("needLog", $("needLog").is(":checked"));
 
         $.ajax({
             type: "POST",
             url: "/parser/parse",
             enctype: 'multipart/form-data',
-            data: data,
+            data: formData,
             contentType: false,
             processData: false,
             success: function () {
                 $("#loading-header").text("Success!");
                 $("#loading-ok-button").click(function () {
                     window.location.reload();
-                })
+                });
             },
             error: function (response) {
                 $("#loading-header").text("Error!");
