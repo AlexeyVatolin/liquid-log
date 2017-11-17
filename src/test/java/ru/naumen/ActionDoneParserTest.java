@@ -1,4 +1,4 @@
-package ru.naumen.sd40.log.parser;
+package ru.naumen;
 
 import org.junit.Assert;
 import org.junit.Test;

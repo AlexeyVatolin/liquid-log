@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.perfhouse.parser.Parser;
+import ru.naumen.perfhouse.parser.LogsParser;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +30,13 @@ public class ClientsController
 {
     private Logger LOG = LoggerFactory.getLogger(ClientsController.class);
     private InfluxDAO influxDAO;
-    private Parser parser;
+    private LogsParser logsParser;
 
     @Inject
-    public ClientsController(InfluxDAO influxDAO, Parser parser)
+    public ClientsController(InfluxDAO influxDAO, LogsParser logsParser)
     {
         this.influxDAO = influxDAO;
-        this.parser = parser;
+        this.logsParser = logsParser;
     }
 
     @RequestMapping(path = "/")
@@ -105,7 +105,7 @@ public class ClientsController
         try (InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream()))
         {
             String fileName = file.getOriginalFilename();
-            parser.parse(dbName, parsingMode, timeZone, needLog, fileName, inputStreamReader);
+            logsParser.parse(dbName, parsingMode, timeZone, needLog, fileName, inputStreamReader);
         }
         catch (ParseException | IOException ex)
         {
