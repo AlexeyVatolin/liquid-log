@@ -28,8 +28,6 @@ public class ActionDoneData {
     private int getDtObjectActions = 0;
     private int searchActions = 0;
 
-    private boolean nan = true;
-
     public ActionDoneData() {
         EXCLUDED_ACTIONS = new HashSet<>();
         EXCLUDED_ACTIONS.add("EventAction".toLowerCase());
@@ -48,7 +46,6 @@ public class ActionDoneData {
         percent999 = ds.getPercentile(99.9);
         max = ds.getMax();
         count = ds.getN();
-        nan = count == 0;
     }
 
     public Set<String> getExcludedActions() {
@@ -187,6 +184,6 @@ public class ActionDoneData {
 
     public boolean isEmpty()
     {
-        return nan;
+        return count == 0;
     }
 }

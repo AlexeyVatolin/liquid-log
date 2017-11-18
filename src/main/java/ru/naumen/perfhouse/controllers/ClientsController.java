@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import ru.naumen.perfhouse.influx.InfluxDAO;
+import ru.naumen.perfhouse.influx.InfluxDAOImpl;
 import ru.naumen.perfhouse.parser.LogsParser;
 
 import javax.inject.Inject;
@@ -29,11 +29,11 @@ import java.util.List;
 public class ClientsController
 {
     private Logger LOG = LoggerFactory.getLogger(ClientsController.class);
-    private InfluxDAO influxDAO;
+    private InfluxDAOImpl influxDAO;
     private LogsParser logsParser;
 
     @Inject
-    public ClientsController(InfluxDAO influxDAO, LogsParser logsParser)
+    public ClientsController(InfluxDAOImpl influxDAO, LogsParser logsParser)
     {
         this.influxDAO = influxDAO;
         this.logsParser = logsParser;

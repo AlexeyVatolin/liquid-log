@@ -1,16 +1,9 @@
 package ru.naumen.perfhouse.parser;
 
-import org.influxdb.dto.BatchPoints;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.naumen.perfhouse.influx.DataStorage;
-import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.perfhouse.parser.data.ActionDoneData;
 import ru.naumen.perfhouse.parser.data_parsers.*;
-import ru.naumen.perfhouse.parser.data.ErrorData;
-import ru.naumen.perfhouse.parser.data.GCData;
 import ru.naumen.perfhouse.parser.time_parsers.GCTimeParser;
-import ru.naumen.perfhouse.parser.data.TopData;
 import ru.naumen.perfhouse.parser.time_parsers.SdngTimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TopTimeParser;
@@ -21,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.util.HashMap;
 
 @Service
 public class LogsParser {

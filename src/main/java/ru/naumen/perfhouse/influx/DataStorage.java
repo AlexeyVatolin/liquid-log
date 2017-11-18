@@ -20,10 +20,13 @@ public class DataStorage {
     }
 
     public DataSet get(long key) {
-        if (key == currentKey) {
-            return dataSet;
+        if (dataSet != null)
+        {
+            if (key == currentKey) {
+                return dataSet;
+            }
+            store(dataSet);
         }
-        store(dataSet);
         currentKey = key;
         dataSet = new DataSet();
         return dataSet;
@@ -55,7 +58,7 @@ public class DataStorage {
             influxDAO.storeGc(batchPoints, dbName, currentKey, gc);
         }
 
-        TopData cpuData = dataSet.cpuData();
+        TopData cpuData = dataSet.getTopData();
         if (!cpuData.isEmpty()) {
             influxDAO.storeTop(batchPoints, dbName, currentKey, cpuData);
         }

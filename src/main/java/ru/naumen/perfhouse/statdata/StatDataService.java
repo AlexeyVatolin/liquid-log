@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Joiner;
 
-import ru.naumen.perfhouse.influx.InfluxDAO;
+import ru.naumen.perfhouse.influx.InfluxDAOImpl;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateHelper;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
 
@@ -45,7 +45,7 @@ public class StatDataService
     private static final String pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     @Autowired
-    private InfluxDAO influxdao;
+    private InfluxDAOImpl influxdao;
 
     private final NumberComparator<Number> comparator = new NumberComparator<>();
 

@@ -8,14 +8,14 @@ public class DataSet
     private ActionDoneData actionsDone;
     private ErrorData errors;
     private GCData gc;
-    private TopData cpuData;
+    private TopData topData;
 
     public DataSet()
     {
         actionsDone = new ActionDoneData();
         errors = new ErrorData();
         gc = new GCData();
-        cpuData = new TopData();
+        topData = new TopData();
     }
 
     public ActionDoneData getActionsDone()
@@ -33,8 +33,8 @@ public class DataSet
         return gc;
     }
 
-    public TopData cpuData()
+    public TopData getTopData()
     {
-        return cpuData;
+        return topData;
     }
 }
