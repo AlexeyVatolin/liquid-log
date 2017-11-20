@@ -50,11 +50,11 @@ import ru.naumen.perfhouse.parser.data.TopData;
 @Component
 public class InfluxDAOImpl implements InfluxDAO
 {
-    private String influxHost;
+    private final String influxHost;
 
-    private String user;
+    private final String user;
 
-    private String password;
+    private final String password;
 
     private InfluxDB influx;
 

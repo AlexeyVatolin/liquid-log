@@ -25,6 +25,11 @@ import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
 @Component
 public class StatDataService
 {
+    @Autowired
+    public StatDataService(InfluxDAO influxDAO) {
+        this.influxDAO = influxDAO;
+    }
+
     private static class NumberComparator<T extends Number> implements Comparator<T>
     {
 
@@ -44,8 +49,7 @@ public class StatDataService
 
     private static final String pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-    @Autowired
-    private InfluxDAO influxDAO;
+    private final InfluxDAO influxDAO;
 
     private final NumberComparator<Number> comparator = new NumberComparator<>();
 
@@ -99,7 +103,7 @@ public class StatDataService
             {
                 Number resultData = result.getDataAt(name, position);
                 Number dataAtCompressed = toCompress.getDataAt(name, i);
-                if (resultData == null || comparator.compare(resultData, dataAtCompressed) == -1)
+                if (resultData == null || comparator.compare(resultData, dataAtCompressed) < 0)
                 {
                     result.setDataAt(name, dataAtCompressed, position);
                 }
@@ -117,8 +121,7 @@ public class StatDataService
             return null;
         }
 
-        StatData data = createData(result);
-        return data;
+        return createData(result);
     }
 
     public StatData getDataCustom(String client, DataType type, String from, String to) throws ParseException

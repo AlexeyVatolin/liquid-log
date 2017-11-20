@@ -11,14 +11,14 @@ import ru.naumen.perfhouse.parser.data.TopData;
 import java.util.List;
 
 public interface InfluxDAO {
-    public void connectToDB(String dbName);
-    public QueryResult.Series executeQuery(String dbName, String query);
-    public List<String> getDbList();
-    public BatchPoints startBatchPoints(String dbName);
-    public void storeFromJSon(BatchPoints batch, String dbName, JSONObject data);
-    public void storeActionsFromLog(BatchPoints batch, String dbName, long date, ActionDoneData dones,
-                                    ErrorData errors);
-    public void storeGc(BatchPoints batch, String dbName, long date, GCData gc);
-    public void storeTop(BatchPoints batch, String dbName, long date, TopData data);
-    public void writeBatch(BatchPoints batch);
+    void connectToDB(String dbName);
+    QueryResult.Series executeQuery(String dbName, String query);
+    List<String> getDbList();
+    BatchPoints startBatchPoints(String dbName);
+    void storeFromJSon(BatchPoints batch, String dbName, JSONObject data);
+    void storeActionsFromLog(BatchPoints batch, String dbName, long date, ActionDoneData dones,
+                             ErrorData errors);
+    void storeGc(BatchPoints batch, String dbName, long date, GCData gc);
+    void storeTop(BatchPoints batch, String dbName, long date, TopData data);
+    void writeBatch(BatchPoints batch);
 }

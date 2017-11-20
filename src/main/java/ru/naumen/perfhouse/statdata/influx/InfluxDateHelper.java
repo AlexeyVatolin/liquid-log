@@ -31,8 +31,7 @@ public class InfluxDateHelper
         dtTo = new DateTime(year, month,
                 day == 0 ? new YearMonth(year, month).toDateTime(null).dayOfMonth().getMaximumValue() : day, 23, 59, 59,
                 999).withZone(DateTimeZone.UTC);
-        InfluxDateRange utcRange = new InfluxDateRange(influxFormat.print(dtFrom), influxFormat.print(dtTo));
-        return utcRange;
+        return new InfluxDateRange(influxFormat.print(dtFrom), influxFormat.print(dtTo));
     }
 
     /**
@@ -51,7 +50,6 @@ public class InfluxDateHelper
 
         DateTime dateTime = new DateTime(millisFrom);
         DateTime toTime = new DateTime(millisTo).plusHours(23).plusMinutes(59).plusSeconds(59).plusMillis(999);
-        InfluxDateRange utcRange = new InfluxDateRange(influxFormat.print(dateTime), influxFormat.print(toTime));
-        return utcRange;
+        return new InfluxDateRange(influxFormat.print(dateTime), influxFormat.print(toTime));
     }
 }

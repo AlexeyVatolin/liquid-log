@@ -31,7 +31,7 @@ public class StatData
 
     public Set<String> getDataProperties()
     {
-        return new HashSet<String>(struct.keySet());
+        return new HashSet<>(struct.keySet());
     }
 
     public int getDataSize()

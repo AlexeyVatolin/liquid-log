@@ -14,7 +14,7 @@ public enum DataType
     GARBAGE_COLLECTION(GarbageCollection.getProps()),
     ACTIONS(PerformedActions.getProps()),
     TOP(Top.getProps());
-    //@formtatter:on
+    //@formatter:on
     
     private List<String> properties;
 

@@ -1,8 +1,6 @@
 package ru.naumen.perfhouse.influx;
 
 import org.influxdb.dto.BatchPoints;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import ru.naumen.perfhouse.parser.data.*;
 
 public class DataStorage {
