@@ -3,6 +3,7 @@ package ru.naumen;
 import org.influxdb.dto.BatchPoints;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.naumen.perfhouse.influx.DataStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -12,12 +13,13 @@ import ru.naumen.perfhouse.parser.data_parsers.*;
 import static org.mockito.Mockito.*;
 
 public class DataStorageTest {
-    private InfluxDAO influxDAOMock;
-    private DataStorage dataStorage;
-    private BatchPoints batchPoints;
-    private String dbName;
+    private static InfluxDAO influxDAOMock;
+    private static DataStorage dataStorage;
+    private static BatchPoints batchPoints;
+    private static String dbName;
 
-    public DataStorageTest()
+    @BeforeClass
+    public static void initialization()
     {
         dbName = "logTest";
         influxDAOMock = mock(InfluxDAO.class);
@@ -26,7 +28,7 @@ public class DataStorageTest {
     }
 
     @Before
-    public void initialization()
+    public void initializationBeforeEachTest()
     {
         dataStorage = new DataStorage(influxDAOMock);
         dataStorage.init(dbName, false);
@@ -59,11 +61,11 @@ public class DataStorageTest {
         //given
 
         //when
-        DataSet dataSet1 = dataStorage.get(0);
-        DataSet dataSet2 = dataStorage.get(0);
+        DataSet dataSet = dataStorage.get(0);
+        DataSet dataSetCopy = dataStorage.get(0);
 
         //then
-        Assert.assertEquals(dataSet1, dataSet2);
+        Assert.assertEquals(dataSet, dataSetCopy);
     }
 
     @Test
@@ -71,11 +73,11 @@ public class DataStorageTest {
         //given
 
         //when
-        DataSet dataSet1 = dataStorage.get(1);
-        DataSet dataSet2 = dataStorage.get(1);
+        DataSet dataSet = dataStorage.get(1);
+        DataSet dataSetCopy = dataStorage.get(1);
 
         //then
-        Assert.assertEquals(dataSet1, dataSet2);
+        Assert.assertEquals(dataSet, dataSetCopy);
     }
 
     @Test
@@ -83,11 +85,11 @@ public class DataStorageTest {
         //given
 
         //when
-        DataSet dataSet1 = dataStorage.get(1);
-        DataSet dataSet2 = dataStorage.get(2);
+        DataSet dataSetWithKeyOne = dataStorage.get(1);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
 
         //then
-        Assert.assertNotEquals(dataSet1, dataSet2);
+        Assert.assertNotEquals(dataSetWithKeyOne, dataSetWithKeyTwo);
     }
 
     @Test
@@ -95,12 +97,12 @@ public class DataStorageTest {
         //given
 
         //when
-        DataSet dataSet1 = dataStorage.get(0);
-        dataSet1.getErrors().incrementErrorCount();
-        DataSet dataSet2 = dataStorage.get(0);
+        DataSet dataSet = dataStorage.get(0);
+        dataSet.getErrors().incrementErrorCount();
+        DataSet dataSetCopy = dataStorage.get(0);
 
         //then
-        Assert.assertEquals(dataSet1.getErrors().getErrorCount(), dataSet2.getErrors().getErrorCount());
+        Assert.assertEquals(dataSet.getErrors().getErrorCount(), dataSetCopy.getErrors().getErrorCount());
     }
 
     @Test
@@ -111,14 +113,32 @@ public class DataStorageTest {
         String actionLogLine = "Done(10): AddObjectAction";
 
         //when
-        DataSet dataSet1 = dataStorage.get(1);
-        dataParser.parseLine(dataSet1, errorLogLine);
-        dataParser.parseLine(dataSet1, actionLogLine);
-        DataSet dataSet2 = dataStorage.get(2);
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, errorLogLine);
+        dataParser.parseLine(dataSet, actionLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
 
         //then
         verify(influxDAOMock).storeActionsFromLog(batchPoints, dbName, 1,
-                dataSet1.getActionsDone(), dataSet1.getErrors());
+                dataSet.getActionsDone(), dataSet.getErrors());
+    }
+
+    @Test
+    public void storeCountSDNGTest() {
+        //given
+        DataParser dataParser = new GenericParser(new ErrorParser(), new ActionDoneParser());
+        String errorLogLine = "10126 [localhost-startStop-1 - -] (07 сен 2017 04:58:16,761) WARN  server.SpringPropertyPlaceholderConfigurer - Could not load properties from URL [file:////home/administrator/.naumen/sd/conf/dbaccess.properties";
+        String actionLogLine = "Done(10): AddObjectAction";
+
+        //when
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, errorLogLine);
+        dataParser.parseLine(dataSet, actionLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
+
+        //then
+        verify(influxDAOMock, times(1)).storeActionsFromLog(batchPoints, dbName, 1,
+                dataSet.getActionsDone(), dataSet.getErrors());
     }
 
     @Test
@@ -128,12 +148,28 @@ public class DataStorageTest {
         String gcLogLine = "2017-11-03T10:41:03.724+0000: 6.549: [GC (Allocation Failure) [PSYoungGen: 655360K->58520K(764416K)] 655360K->58592K(2512384K), 0.0612895 secs] [Times: user=0.08 sys=0.01, real=0.06 secs] ";
 
         //when
-        DataSet dataSet1 = dataStorage.get(1);
-        dataParser.parseLine(dataSet1, gcLogLine);
-        DataSet dataSet2 = dataStorage.get(2);
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, gcLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
 
         //then
-        verify(influxDAOMock).storeGc(batchPoints, dbName, 1, dataSet1.getGc());
+        verify(influxDAOMock).storeGc(batchPoints, dbName, 1, dataSet.getGc());
+        verify(influxDAOMock, times(1)).storeGc(batchPoints, dbName, 1, dataSet.getGc());
+    }
+
+    @Test
+    public void storeCountGCTest() {
+        //given
+        DataParser dataParser = new GCParser();
+        String gcLogLine = "2017-11-03T10:41:03.724+0000: 6.549: [GC (Allocation Failure) [PSYoungGen: 655360K->58520K(764416K)] 655360K->58592K(2512384K), 0.0612895 secs] [Times: user=0.08 sys=0.01, real=0.06 secs] ";
+
+        //when
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, gcLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
+
+        //then
+        verify(influxDAOMock, times(1)).storeGc(batchPoints, dbName, 1, dataSet.getGc());
     }
 
     @Test
@@ -143,12 +179,27 @@ public class DataStorageTest {
         String gcLogLine = "top - 00:00:01 up 219 days, 17:42,  0 users,  load average: 0.00, 0.01, 0.05";
 
         //when
-        DataSet dataSet1 = dataStorage.get(1);
-        dataParser.parseLine(dataSet1, gcLogLine);
-        DataSet dataSet2 = dataStorage.get(2);
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, gcLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
 
         //then
-        verify(influxDAOMock).storeTop(batchPoints, dbName, 1, dataSet1.getTopData());
+        verify(influxDAOMock).storeTop(batchPoints, dbName, 1, dataSet.getTopData());
+    }
+
+    @Test
+    public void storeCountTopTest() {
+        //given
+        DataParser dataParser = new TopParser();
+        String gcLogLine = "top - 00:00:01 up 219 days, 17:42,  0 users,  load average: 0.00, 0.01, 0.05";
+
+        //when
+        DataSet dataSet = dataStorage.get(1);
+        dataParser.parseLine(dataSet, gcLogLine);
+        DataSet dataSetWithKeyTwo = dataStorage.get(2);
+
+        //then
+        verify(influxDAOMock, times(1)).storeTop(batchPoints, dbName, 1, dataSet.getTopData());
     }
 
 }

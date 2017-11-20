@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.naumen.perfhouse.parser.data.*;
 
-@Repository
 public class DataStorage {
     private InfluxDAO influxDAO;
     private BatchPoints batchPoints;
@@ -14,7 +13,6 @@ public class DataStorage {
     private long currentKey;
     private DataSet dataSet;
 
-    @Autowired
     public DataStorage(InfluxDAO influxDAO) {
         this.influxDAO = influxDAO;
     }

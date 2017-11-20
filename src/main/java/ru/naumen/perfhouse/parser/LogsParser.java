@@ -2,6 +2,7 @@ package ru.naumen.perfhouse.parser;
 
 import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.influx.DataStorage;
+import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.data_parsers.*;
 import ru.naumen.perfhouse.parser.time_parsers.GCTimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.SdngTimeParser;
@@ -18,16 +19,16 @@ import java.text.ParseException;
 @Service
 public class LogsParser {
 
-    private final DataStorage dataStorage;
+    private final InfluxDAO influxDAO;
 
     @Inject
-    public LogsParser(DataStorage dataStorage) {
-        this.dataStorage = dataStorage;
+    public LogsParser(InfluxDAO influxDAO) {
+        this.influxDAO = influxDAO;
     }
 
     public void parse(String dbName, String parsingMode, String timeZone, Boolean needLog, String fileName,
                       InputStreamReader logStreamReader) throws IOException, ParseException {
-
+        DataStorage dataStorage = new DataStorage(influxDAO);
         dataStorage.init(dbName, needLog);
         TimeParser timeParser;
         DataParser dataParser;

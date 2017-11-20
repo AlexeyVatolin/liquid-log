@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Joiner;
 
-import ru.naumen.perfhouse.influx.InfluxDAOImpl;
+import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateHelper;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
 
@@ -45,7 +45,7 @@ public class StatDataService
     private static final String pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     @Autowired
-    private InfluxDAOImpl influxdao;
+    private InfluxDAO influxDAO;
 
     private final NumberComparator<Number> comparator = new NumberComparator<>();
 
@@ -111,7 +111,7 @@ public class StatDataService
 
     public StatData getData(String client, DataType dataType, int maxResults) throws ParseException
     {
-        Series result = influxdao.executeQuery(client, prepareQuery(dataType, maxResults));
+        Series result = influxDAO.executeQuery(client, prepareQuery(dataType, maxResults));
         if (result == null)
         {
             return null;
@@ -132,7 +132,7 @@ public class StatDataService
         String query = String.format(template, Joiner.on(',').join(type.getTypeProperties()),
                 Constants.MEASUREMENT_NAME, where, time);
 
-        Series result = influxdao.executeQuery(client, query);
+        Series result = influxDAO.executeQuery(client, query);
         if (result == null)
         {
             return null;
@@ -143,7 +143,7 @@ public class StatDataService
     public StatData getDataDate(String client, DataType dataType, int year, int month, int day) throws ParseException
     {
         String q = prepareQueryDate(dataType, year, month, day);
-        Series result = influxdao.executeQuery(client, q);
+        Series result = influxDAO.executeQuery(client, q);
         if (result == null)
         {
             return null;
