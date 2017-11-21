@@ -35,6 +35,11 @@ public class DataStorage {
         batchPoints = influxDAO.startBatchPoints(this.dbName);
     }
 
+    public void save()
+    {
+        store(dataSet);
+    }
+
     private void store(DataSet dataSet) {
         ActionDoneData dones = dataSet.getActionsDone();
         dones.calculate();

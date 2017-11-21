@@ -13,23 +13,17 @@ import ru.naumen.perfhouse.parser.data_parsers.*;
 import static org.mockito.Mockito.*;
 
 public class DataStorageTest {
-    private static InfluxDAO influxDAOMock;
-    private static DataStorage dataStorage;
-    private static BatchPoints batchPoints;
-    private static String dbName;
-
-    @BeforeClass
-    public static void initialization()
-    {
-        dbName = "logTest";
-        influxDAOMock = mock(InfluxDAO.class);
-        batchPoints = BatchPoints.database(dbName).build();
-        when(influxDAOMock.startBatchPoints(dbName)).thenReturn(batchPoints);
-    }
+    private InfluxDAO influxDAOMock;
+    private DataStorage dataStorage;
+    private BatchPoints batchPoints;
+    private final static String dbName= "logTest";
 
     @Before
     public void initializationBeforeEachTest()
     {
+        influxDAOMock = mock(InfluxDAO.class);
+        batchPoints = BatchPoints.database(dbName).build();
+        when(influxDAOMock.startBatchPoints(dbName)).thenReturn(batchPoints);
         dataStorage = new DataStorage(influxDAOMock);
         dataStorage.init(dbName, false);
     }
@@ -135,10 +129,15 @@ public class DataStorageTest {
         dataParser.parseLine(dataSet, errorLogLine);
         dataParser.parseLine(dataSet, actionLogLine);
         DataSet dataSetWithKeyTwo = dataStorage.get(2);
+        dataParser.parseLine(dataSetWithKeyTwo, errorLogLine);
+        dataParser.parseLine(dataSetWithKeyTwo, actionLogLine);
+        dataStorage.save();
 
         //then
         verify(influxDAOMock, times(1)).storeActionsFromLog(batchPoints, dbName, 1,
                 dataSet.getActionsDone(), dataSet.getErrors());
+        verify(influxDAOMock, times(1)).storeActionsFromLog(batchPoints, dbName, 2,
+                dataSetWithKeyTwo.getActionsDone(), dataSetWithKeyTwo.getErrors());
     }
 
     @Test
@@ -154,7 +153,6 @@ public class DataStorageTest {
 
         //then
         verify(influxDAOMock).storeGc(batchPoints, dbName, 1, dataSet.getGc());
-        verify(influxDAOMock, times(1)).storeGc(batchPoints, dbName, 1, dataSet.getGc());
     }
 
     @Test
@@ -167,9 +165,12 @@ public class DataStorageTest {
         DataSet dataSet = dataStorage.get(1);
         dataParser.parseLine(dataSet, gcLogLine);
         DataSet dataSetWithKeyTwo = dataStorage.get(2);
+        dataParser.parseLine(dataSetWithKeyTwo, gcLogLine);
+        dataStorage.save();
 
         //then
         verify(influxDAOMock, times(1)).storeGc(batchPoints, dbName, 1, dataSet.getGc());
+        verify(influxDAOMock, times(1)).storeGc(batchPoints, dbName, 2, dataSetWithKeyTwo.getGc());
     }
 
     @Test
@@ -197,9 +198,12 @@ public class DataStorageTest {
         DataSet dataSet = dataStorage.get(1);
         dataParser.parseLine(dataSet, gcLogLine);
         DataSet dataSetWithKeyTwo = dataStorage.get(2);
+        dataParser.parseLine(dataSetWithKeyTwo, gcLogLine);
+        dataStorage.save();
 
         //then
         verify(influxDAOMock, times(1)).storeTop(batchPoints, dbName, 1, dataSet.getTopData());
+        verify(influxDAOMock, times(1)).storeTop(batchPoints, dbName, 2, dataSetWithKeyTwo.getTopData());
     }
 
 }

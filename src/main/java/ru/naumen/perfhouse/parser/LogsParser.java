@@ -68,6 +68,7 @@ public class LogsParser {
                 DataSet dataSet = dataStorage.get(key);
                 dataParser.parseLine(dataSet, line);
             }
+            dataStorage.save();
         }
     }
 }
