@@ -1,15 +1,12 @@
 package ru.naumen.perfhouse.parser.data_parsers;
 
+import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.DataSet;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Top output parser
- * @author dkolmogortsev
- *
- */
+@Service
 public class TopParser implements DataParser
 {
     private static final Pattern cpuAndMemPattren = Pattern
