@@ -23,14 +23,18 @@ import ru.naumen.perfhouse.statdata.StatDataService;
 public class HistoryController
 {
 
-    @Autowired
-    StatDataService service;
+    private final StatDataService service;
 
     private static final String NO_HISTORY_VIEW = "no_history";
     private static final String HISTORY_VIEW = "history";
     private static final String ACTIONS_VIEW = "history_actions";
     private static final String GC_VIEW = "gc_history";
     private static final String CPU_VIEW = "history_top";
+
+    @Autowired
+    public HistoryController(StatDataService service) {
+        this.service = service;
+    }
 
     @RequestMapping(path = "/history/{client}/{year}/{month}/{day}")
     public ModelAndView indexByDay(@PathVariable("client") String client,

@@ -1,15 +1,10 @@
 package ru.naumen.perfhouse.parser;
 
-import org.influxdb.dto.BatchPoints;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import ru.naumen.perfhouse.influx.DataStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.perfhouse.parser.data.ActionDoneData;
 import ru.naumen.perfhouse.parser.data_parsers.*;
-import ru.naumen.perfhouse.parser.data.ErrorData;
-import ru.naumen.perfhouse.parser.data.GCData;
 import ru.naumen.perfhouse.parser.time_parsers.GCTimeParser;
-import ru.naumen.perfhouse.parser.data.TopData;
 import ru.naumen.perfhouse.parser.time_parsers.SdngTimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TopTimeParser;
@@ -20,28 +15,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.util.HashMap;
 
 @Service
-public class Parser {
+public class LogsParser {
 
     private final InfluxDAO influxDAO;
 
     @Inject
-    public Parser(InfluxDAO influxDAO) {
+    public LogsParser(InfluxDAO influxDAO) {
         this.influxDAO = influxDAO;
     }
 
     public void parse(String dbName, String parsingMode, String timeZone, Boolean needLog, String fileName,
                       InputStreamReader logStreamReader) throws IOException, ParseException {
-
-        final String finalInfluxDb = dbName.replaceAll("-", "_");
-        influxDAO.connectToDB(finalInfluxDb);
-
-        BatchPoints points = influxDAO.startBatchPoints(finalInfluxDb);
-
-        HashMap<Long, DataSet> data = new HashMap<>();
-
+        DataStorage dataStorage = new DataStorage(influxDAO);
+        dataStorage.init(dbName, needLog);
         TimeParser timeParser;
         DataParser dataParser;
 
@@ -77,39 +65,10 @@ public class Parser {
                 long count = time / min5;
                 long key = count * min5;
 
-                DataSet dataSet = data.computeIfAbsent(key, k -> new DataSet());
+                DataSet dataSet = dataStorage.get(key);
                 dataParser.parseLine(dataSet, line);
             }
+            dataStorage.save();
         }
-
-        if (needLog) {
-            System.out.print("Timestamp;Actions;Min;Mean;Stddev;50%%;95%%;99%%;99.9%%;Max;Errors\n");
-        }
-
-        data.forEach((k, set) ->
-        {
-            ActionDoneData dones = set.getActionsDone();
-            dones.calculate();
-            ErrorData erros = set.getErrors();
-            if (needLog) {
-                System.out.print(String.format("%d;%d;%f;%f;%f;%f;%f;%f;%f;%f;%d\n", k, dones.getCount(),
-                        dones.getMin(), dones.getMean(), dones.getStddev(), dones.getPercent50(), dones.getPercent95(),
-                        dones.getPercent99(), dones.getPercent999(), dones.getMax(), erros.getErrorCount()));
-            }
-            if (!dones.isEmpty()) {
-                influxDAO.storeActionsFromLog(points, finalInfluxDb, k, dones, erros);
-            }
-
-            GCData gc = set.getGc();
-            if (!gc.isEmpty()) {
-                influxDAO.storeGc(points, finalInfluxDb, k, gc);
-            }
-
-            TopData cpuData = set.cpuData();
-            if (!cpuData.isEmpty()) {
-                influxDAO.storeTop(points, finalInfluxDb, k, cpuData);
-            }
-        });
-        influxDAO.writeBatch(points);
     }
 }

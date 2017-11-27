@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class ErrorParser implements DataParser
 {
-    private static final Pattern warnRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) WARN");
-    private static final Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) ERROR");
-    private static final Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) FATAL");
+    private static final Pattern warnRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) WARN");
+    private static final Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) ERROR");
+    private static final Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) FATAL");
 
     public void parseLine(DataSet dataSet, String line)
     {

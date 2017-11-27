@@ -25,6 +25,11 @@ import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
 @Component
 public class StatDataService
 {
+    @Autowired
+    public StatDataService(InfluxDAO influxDAO) {
+        this.influxDAO = influxDAO;
+    }
+
     private static class NumberComparator<T extends Number> implements Comparator<T>
     {
 
@@ -44,8 +49,7 @@ public class StatDataService
 
     private static final String pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-    @Autowired
-    private InfluxDAO influxdao;
+    private final InfluxDAO influxDAO;
 
     private final NumberComparator<Number> comparator = new NumberComparator<>();
 
@@ -99,7 +103,7 @@ public class StatDataService
             {
                 Number resultData = result.getDataAt(name, position);
                 Number dataAtCompressed = toCompress.getDataAt(name, i);
-                if (resultData == null || comparator.compare(resultData, dataAtCompressed) == -1)
+                if (resultData == null || comparator.compare(resultData, dataAtCompressed) < 0)
                 {
                     result.setDataAt(name, dataAtCompressed, position);
                 }
@@ -111,14 +115,13 @@ public class StatDataService
 
     public StatData getData(String client, DataType dataType, int maxResults) throws ParseException
     {
-        Series result = influxdao.executeQuery(client, prepareQuery(dataType, maxResults));
+        Series result = influxDAO.executeQuery(client, prepareQuery(dataType, maxResults));
         if (result == null)
         {
             return null;
         }
 
-        StatData data = createData(result);
-        return data;
+        return createData(result);
     }
 
     public StatData getDataCustom(String client, DataType type, String from, String to) throws ParseException
@@ -132,7 +135,7 @@ public class StatDataService
         String query = String.format(template, Joiner.on(',').join(type.getTypeProperties()),
                 Constants.MEASUREMENT_NAME, where, time);
 
-        Series result = influxdao.executeQuery(client, query);
+        Series result = influxDAO.executeQuery(client, query);
         if (result == null)
         {
             return null;
@@ -143,7 +146,7 @@ public class StatDataService
     public StatData getDataDate(String client, DataType dataType, int year, int month, int day) throws ParseException
     {
         String q = prepareQueryDate(dataType, year, month, day);
-        Series result = influxdao.executeQuery(client, q);
+        Series result = influxDAO.executeQuery(client, q);
         if (result == null)
         {
             return null;
