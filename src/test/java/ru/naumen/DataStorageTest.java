@@ -3,7 +3,6 @@ package ru.naumen;
 import org.influxdb.dto.BatchPoints;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.naumen.perfhouse.influx.DataStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -102,7 +101,7 @@ public class DataStorageTest {
     @Test
     public void storeSDNGTest() {
         //given
-        DataParser dataParser = new GenericParser(new ErrorParser(), new ActionDoneParser());
+        DataParser dataParser = new SdngParser(new ErrorParser(), new ActionDoneParser());
         String errorLogLine = "10126 [localhost-startStop-1 - -] (07 сен 2017 04:58:16,761) WARN  server.SpringPropertyPlaceholderConfigurer - Could not load properties from URL [file:////home/administrator/.naumen/sd/conf/dbaccess.properties";
         String actionLogLine = "Done(10): AddObjectAction";
 
@@ -120,7 +119,7 @@ public class DataStorageTest {
     @Test
     public void storeCountSDNGTest() {
         //given
-        DataParser dataParser = new GenericParser(new ErrorParser(), new ActionDoneParser());
+        DataParser dataParser = new SdngParser(new ErrorParser(), new ActionDoneParser());
         String errorLogLine = "10126 [localhost-startStop-1 - -] (07 сен 2017 04:58:16,761) WARN  server.SpringPropertyPlaceholderConfigurer - Could not load properties from URL [file:////home/administrator/.naumen/sd/conf/dbaccess.properties";
         String actionLogLine = "Done(10): AddObjectAction";
 

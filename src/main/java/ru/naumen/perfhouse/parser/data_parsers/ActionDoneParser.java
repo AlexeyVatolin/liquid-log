@@ -1,11 +1,13 @@
 package ru.naumen.perfhouse.parser.data_parsers;
 
+import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.ActionDoneData;
 import ru.naumen.perfhouse.parser.data.DataSet;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
 public class ActionDoneParser implements DataParser
 {
     private static final Pattern doneRegEx = Pattern.compile("Done\\((\\d+)\\): ?(.*?Action)");

@@ -1,10 +1,12 @@
 package ru.naumen.perfhouse.parser.data_parsers;
 
+import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.DataSet;
 import ru.naumen.perfhouse.parser.data.ErrorData;
 
 import java.util.regex.Pattern;
 
+@Service
 public class ErrorParser implements DataParser
 {
     private static final Pattern warnRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) WARN");
