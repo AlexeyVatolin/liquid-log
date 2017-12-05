@@ -3,7 +3,6 @@ package ru.naumen.perfhouse.parser.data_parsers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.SdngData;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
 
 @Service
 public class SdngParser implements DataParser<SdngData> {

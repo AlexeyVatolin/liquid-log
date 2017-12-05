@@ -1,9 +1,8 @@
 package ru.naumen.perfhouse.parser.data_parsers;
 
-import com.sun.management.GcInfo;
 import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.GCData;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

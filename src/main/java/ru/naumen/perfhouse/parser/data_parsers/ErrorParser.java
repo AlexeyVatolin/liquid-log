@@ -1,9 +1,8 @@
 package ru.naumen.perfhouse.parser.data_parsers;
 
 import org.springframework.stereotype.Service;
-import ru.naumen.perfhouse.parser.data.SdngData;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
 import ru.naumen.perfhouse.parser.data.ErrorData;
+import ru.naumen.perfhouse.parser.data.SdngData;
 
 import java.util.regex.Pattern;
 
