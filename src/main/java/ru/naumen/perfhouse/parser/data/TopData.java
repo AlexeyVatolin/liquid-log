@@ -8,7 +8,7 @@ import ru.naumen.perfhouse.parser.NumberUtils;
  * @author dkolmogortsev
  *
  */
-public class TopData
+public class TopData extends Data
 {
     private DescriptiveStatistics laStat = new DescriptiveStatistics();
     private DescriptiveStatistics cpuStat = new DescriptiveStatistics();

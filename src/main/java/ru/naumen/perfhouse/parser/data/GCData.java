@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import static ru.naumen.perfhouse.parser.NumberUtils.getSafeDouble;
 import static ru.naumen.perfhouse.parser.NumberUtils.roundToTwoPlaces;
 
-public class GCData {
+public class GCData extends Data{
     private DescriptiveStatistics ds = new DescriptiveStatistics();
 
     public double getCalculatedAvg()
