@@ -208,7 +208,7 @@ public class InfluxDAOImpl implements InfluxDAO
         }
     }
 
-    public void writeBatch(BatchPoints batch)     {
+    public void writeBatch(BatchPoints batch) {
         influx.write(batch);
     }
 }

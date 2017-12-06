@@ -2,19 +2,19 @@ package ru.naumen.perfhouse.parser.data_parsers;
 
 import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.ActionDoneData;
-import ru.naumen.perfhouse.parser.data.DataSet;
+import ru.naumen.perfhouse.parser.data.SdngData;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class ActionDoneParser implements DataParser
+public class ActionDoneParser implements DataParser<SdngData>
 {
     private static final Pattern doneRegEx = Pattern.compile("Done\\((\\d+)\\): ?(.*?Action)");
 
-    public void parseLine(DataSet dataSet, String line)
+    public void parseLine(SdngData dataSet, String line)
     {
-        ActionDoneData actionDoneData = dataSet.getActionsDone();
+        ActionDoneData actionDoneData = dataSet.getActionDoneData();
         Matcher matcher = doneRegEx.matcher(line);
 
         if (matcher.find())
@@ -62,5 +62,4 @@ public class ActionDoneParser implements DataParser
 
         }
     }
-
 }
