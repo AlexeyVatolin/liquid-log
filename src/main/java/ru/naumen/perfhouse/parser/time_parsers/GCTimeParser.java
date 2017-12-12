@@ -1,5 +1,8 @@
 package ru.naumen.perfhouse.parser.time_parsers;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,6 +11,8 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
+@Scope("request")
 public class GCTimeParser implements TimeParser {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ",
@@ -24,6 +29,11 @@ public class GCTimeParser implements TimeParser {
     public GCTimeParser(String timeZone)
     {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
+    }
+
+    @Override
+    public void configure(String fileName, String timeZone) {
+
     }
 
     @Override

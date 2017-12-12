@@ -3,7 +3,7 @@ package ru.naumen.perfhouse.influx;
 import org.influxdb.dto.BatchPoints;
 import ru.naumen.perfhouse.parser.data.*;
 import ru.naumen.perfhouse.parser.data_savers.DataSaver;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
+import ru.naumen.perfhouse.parser.factories.ParserFactory;
 
 public class DataStorage {
     private InfluxDAO influxDAO;
@@ -11,11 +11,11 @@ public class DataStorage {
     private String dbName;
     private Boolean isPrintLog;
     private long currentKey;
-    private DataSet dataSetFactory;
+    private ParserFactory dataSetFactory;
     private Data dataSet;
     private DataSaver dataSaver;
 
-    public DataStorage(InfluxDAO influxDAO, DataSet dataSetFactory, DataSaver dataSaver) {
+    public DataStorage(InfluxDAO influxDAO, ParserFactory dataSetFactory, DataSaver dataSaver) {
         this.influxDAO = influxDAO;
         this.dataSetFactory = dataSetFactory;
         this.dataSaver = dataSaver;
@@ -30,7 +30,7 @@ public class DataStorage {
             store(dataSet);
         }
         currentKey = key;
-        dataSet = dataSetFactory.get();
+        dataSet = dataSetFactory.getDataSet();
         return dataSet;
     }
 
@@ -44,6 +44,7 @@ public class DataStorage {
     public void save()
     {
         store(dataSet);
+        influxDAO.writeBatch(batchPoints);
     }
 
     private void store(Data dataSet) {

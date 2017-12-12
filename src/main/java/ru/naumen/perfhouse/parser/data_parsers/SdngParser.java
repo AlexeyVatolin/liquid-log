@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.parser.data.SdngData;
 
-@Service
+@Service()
 public class SdngParser implements DataParser<SdngData> {
     private DataParser[] dataParsers;
 

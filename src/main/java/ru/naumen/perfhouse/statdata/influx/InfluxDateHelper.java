@@ -14,7 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class InfluxDateHelper
 {
     /**
-     * get {@link InfluxDateRange}
+     * getDataSet {@link InfluxDateRange}
      * builds infux range where 'from' date is based on the passed arguments with midnight time e.g
      * 21/12/2016 00:00:00.000.
      * 'to' is the same date, but time is 23:59:59.999
@@ -35,7 +35,7 @@ public class InfluxDateHelper
     }
 
     /**
-     * get {@link InfluxDateRange} based on arguments
+     * getDataSet {@link InfluxDateRange} based on arguments
      * @param from
      * @param to
      * @return influxRange containing 'from' and 'to' dates for influx with pattern yyyy-MM-dd HH:mm:ss.SSS

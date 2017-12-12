@@ -25,6 +25,5 @@ public class SdngDataSaver implements DataSaver<SdngData> {
         if (!dones.isEmpty()) {
             influxDAO.storeActionsFromLog(batchPoints, dbName, currentKey, dones, erros);
         }
-        influxDAO.writeBatch(batchPoints);
     }
 }

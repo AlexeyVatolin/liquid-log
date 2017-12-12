@@ -1,11 +1,16 @@
 package ru.naumen.perfhouse.parser.time_parsers;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
+@Scope("request")
 public class TopTimeParser implements TimeParser {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
@@ -13,13 +18,8 @@ public class TopTimeParser implements TimeParser {
     private String dataDate;
     private long currentTime;
 
-    public TopTimeParser(String fileName)
-    {
-        this(fileName, "GMT");
-    }
-
-    public TopTimeParser(String fileName, String timeZone)
-    {
+    @Override
+    public void configure(String fileName, String timeZone) {
         dataDate = parseDate(fileName);
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
     }

@@ -1,5 +1,8 @@
 package ru.naumen.perfhouse.parser.time_parsers;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -7,6 +10,8 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
+@Scope("request")
 public class SdngTimeParser implements TimeParser {
 
     private static final Pattern TIME_PATTERN = Pattern
@@ -23,6 +28,11 @@ public class SdngTimeParser implements TimeParser {
     public SdngTimeParser(String timeZone)
     {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
+    }
+
+    @Override
+    public void configure(String fileName, String timeZone) {
+
     }
 
     @Override

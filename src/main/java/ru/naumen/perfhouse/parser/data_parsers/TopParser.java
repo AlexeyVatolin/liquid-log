@@ -13,7 +13,7 @@ public class TopParser implements DataParser<TopData>
 
     public void parseLine(TopData dataSet, String line)
     {
-        //get la
+        //getDataSet la
         Matcher la = Pattern.compile(".*load average:(.*)").matcher(line);
         if (la.find())
         {
@@ -21,7 +21,7 @@ public class TopParser implements DataParser<TopData>
             return;
         }
 
-        //get cpu and mem
+        //getDataSet cpu and mem
         Matcher cpuAndMemMatcher = cpuAndMemPattren.matcher(line);
         if (cpuAndMemMatcher.find())
         {
