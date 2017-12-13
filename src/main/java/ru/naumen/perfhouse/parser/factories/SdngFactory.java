@@ -13,7 +13,6 @@ import ru.naumen.perfhouse.parser.time_parsers.SdngTimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 
 @Service("Sdng")
-@Scope("request")
 public class SdngFactory implements ParserFactory {
     private SdngTimeParser sdngTimeParser;
     private SdngDataSaver sdngDataSaver;

@@ -13,7 +13,6 @@ import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TopTimeParser;
 
 @Service("Top")
-@Scope("request")
 public class TopFactory implements ParserFactory {
     private TopTimeParser topTimeParser;
     private TopDataSaver topDataSaver;

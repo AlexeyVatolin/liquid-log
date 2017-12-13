@@ -13,7 +13,6 @@ import ru.naumen.perfhouse.parser.time_parsers.GCTimeParser;
 import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 
 @Service("Gc")
-@Scope("request")
 public class GcFactory implements ParserFactory {
     private GCTimeParser timeParser;
     private GcDataSaver gcDataSaver;
