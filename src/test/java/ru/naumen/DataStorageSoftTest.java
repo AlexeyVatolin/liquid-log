@@ -9,12 +9,8 @@ import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.data.Data;
 import ru.naumen.perfhouse.parser.data.SdngData;
 import ru.naumen.perfhouse.parser.data_savers.DataSaver;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
 import ru.naumen.perfhouse.parser.data_parsers.*;
-import ru.naumen.perfhouse.parser.dataset_factory.GCDataSetFactory;
-import ru.naumen.perfhouse.parser.dataset_factory.SdngDataSetFactory;
-import ru.naumen.perfhouse.parser.dataset_factory.TopDataSetFactory;
-
+import ru.naumen.perfhouse.parser.factories.SdngFactory;
 import static org.mockito.Mockito.*;
 
 public class DataStorageSoftTest {
@@ -31,7 +27,9 @@ public class DataStorageSoftTest {
         dataSaver = mock(DataSaver.class);
         batchPoints = BatchPoints.database(dbName).build();
         when(influxDAOMock.startBatchPoints(dbName)).thenReturn(batchPoints);
-        dataStorage = new DataStorage(influxDAOMock, new SdngDataSetFactory(), dataSaver);
+        SdngFactory sdngFactoryMock = mock(SdngFactory.class);
+        when(sdngFactoryMock.getDataSet()).thenAnswer(ans -> new SdngData());
+        dataStorage = new DataStorage(influxDAOMock, sdngFactoryMock, dataSaver);
         dataStorage.init(dbName, false);
     }
 

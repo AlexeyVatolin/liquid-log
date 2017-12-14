@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.influx.InfluxDAOImpl;
 import ru.naumen.perfhouse.parser.LogsParser;
+import ru.naumen.perfhouse.parser.factories.ParserFactory;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,12 +34,14 @@ public class ClientsController
     private Logger LOG = LoggerFactory.getLogger(ClientsController.class);
     private InfluxDAO influxDAO;
     private LogsParser logsParser;
+    private AbstractApplicationContext applicationContext;
 
-    @Inject
-    public ClientsController(InfluxDAOImpl influxDAO, LogsParser logsParser)
+    @Autowired
+    public ClientsController(InfluxDAOImpl influxDAO, LogsParser logsParser, AbstractApplicationContext applicationContext)
     {
         this.influxDAO = influxDAO;
         this.logsParser = logsParser;
+        this.applicationContext = applicationContext;
     }
 
     @RequestMapping(path = "/")
@@ -49,6 +53,7 @@ public class ClientsController
         HashMap<String, Object> clientMonthLinks = new HashMap<>();
         HashMap<String, Object> clientLastWeekLinks = new HashMap<>();
         HashMap<String, Object> clientPreviousMonthLinks = new HashMap<>();
+        String[] availableParsers = applicationContext.getBeanNamesForType(ParserFactory.class);
 
         DateTime now = DateTime.now();
         DateTime prevMonth = now.minusMonths(1);
@@ -72,6 +77,7 @@ public class ClientsController
         model.put("last864links", clientLast3DaysLinks);
         model.put("last2016links", clientLastWeekLinks);
         model.put("prevMonthLinks", clientPreviousMonthLinks);
+        model.put("availableParsers", availableParsers);
 
         return new ModelAndView("clients", model, HttpStatus.OK);
     }

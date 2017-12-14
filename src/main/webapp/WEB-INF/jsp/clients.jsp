@@ -125,9 +125,9 @@
                     <div class="form-group">
                         <label for="parsingMode">Parsing mode</label>
                         <select id="parsingMode" class="form-control" name="parsingMode">
-                            <option>sdng</option>
-                            <option>gc</option>
-                            <option>top</option>
+                            <% for (String parser : (String[]) request.getAttribute("availableParsers")) { %>
+                                <option><%= parser %></option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="form-group">

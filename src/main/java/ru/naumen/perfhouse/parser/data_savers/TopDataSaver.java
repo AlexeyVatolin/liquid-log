@@ -13,6 +13,5 @@ public class TopDataSaver implements DataSaver<TopData> {
         if (!dataSet.isEmpty()) {
             influxDAO.storeTop(batchPoints, dbName, currentKey, dataSet);
         }
-        influxDAO.writeBatch(batchPoints);
     }
 }

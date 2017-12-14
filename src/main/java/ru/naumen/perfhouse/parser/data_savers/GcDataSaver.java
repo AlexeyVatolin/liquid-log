@@ -13,6 +13,5 @@ public class GcDataSaver implements DataSaver<GCData> {
         if (!dataSet.isEmpty()) {
             influxDAO.storeGc(batchPoints, dbName, currentKey, dataSet);
         }
-        influxDAO.writeBatch(batchPoints);
     }
 }

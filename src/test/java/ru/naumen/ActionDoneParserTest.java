@@ -2,9 +2,7 @@ package ru.naumen;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.naumen.perfhouse.parser.data.Data;
 import ru.naumen.perfhouse.parser.data.SdngData;
-import ru.naumen.perfhouse.parser.dataset_factory.DataSet;
 import ru.naumen.perfhouse.parser.data_parsers.ActionDoneParser;
 
 public class ActionDoneParserTest {
