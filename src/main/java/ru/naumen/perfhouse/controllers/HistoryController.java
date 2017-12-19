@@ -21,18 +21,18 @@ import ru.naumen.perfhouse.statdata.StatDataService;
 public class HistoryController {
 
     private final StatDataService service;
-    private List<ParserDataForGUI> constantsList;
+    private List<ParserDataForGUI> parserDataForGUIList;
     private String nameOfFirstConstant;
 
     private static final String NO_HISTORY_VIEW = "no_history";
     private static final String HISTORY_VIEW = "history";
 
     @Autowired
-    public HistoryController(StatDataService service, List<ParserDataForGUI> constantsList) {
+    public HistoryController(StatDataService service, List<ParserDataForGUI> parserDataForGUIList) {
         this.service = service;
-        this.constantsList = constantsList;
-        this.constantsList.sort(Comparator.comparing(item -> item.getClass().getSimpleName()));
-        this.nameOfFirstConstant = constantsList.get(0).getClass().getSimpleName();
+        this.parserDataForGUIList = parserDataForGUIList;
+        this.parserDataForGUIList.sort(Comparator.comparing(item -> item.getClass().getSimpleName()));
+        this.nameOfFirstConstant = parserDataForGUIList.get(0).getClass().getSimpleName();
     }
 
     @RequestMapping(path = "/history/{client}/{year}/{month}/{day}")
@@ -40,7 +40,7 @@ public class HistoryController {
                                    @PathVariable(name = "year", required = false) int year,
                                    @PathVariable(name = "month", required = false) int month,
                                    @PathVariable(name = "day", required = false) int day) throws ParseException {
-        return getDataAndViewByDate(client, constantsList.get(0), year, month, day, nameOfFirstConstant);
+        return getDataAndViewByDate(client, parserDataForGUIList.get(0), year, month, day, nameOfFirstConstant);
     }
 
     @RequestMapping(path = "/history/{client}/{parserName}/{year}/{month}/{day}")
@@ -58,7 +58,7 @@ public class HistoryController {
     public ModelAndView indexByMonth(@PathVariable("client") String client,
                                      @PathVariable(name = "year", required = false) int year,
                                      @PathVariable(name = "month", required = false) int month) throws ParseException {
-        return getDataAndViewByDate(client, constantsList.get(0), year, month, 0, true, nameOfFirstConstant);
+        return getDataAndViewByDate(client, parserDataForGUIList.get(0), year, month, 0, true, nameOfFirstConstant);
     }
 
     @RequestMapping(path = "/history/{client}/{parserName}/{year}/{month}")
@@ -73,7 +73,7 @@ public class HistoryController {
     @RequestMapping(path = "/history/{client}")
     public ModelAndView indexLast3Days(@PathVariable("client") String client,
                                        @RequestParam(name = "count", defaultValue = "864") int count) throws ParseException {
-        StatData d = service.getData(client, constantsList.get(0), count);
+        StatData d = service.getData(client, parserDataForGUIList.get(0), count);
 
         if (d == null) {
             return new ModelAndView(NO_HISTORY_VIEW);
@@ -104,7 +104,7 @@ public class HistoryController {
         model.put("client", client);
         model.put("constant", parserDataForGUI);
         model.put("currentParserName", currentParserName);
-        model.put("constantsList", constantsList);
+        model.put("constantsList", parserDataForGUIList);
 
         return new ModelAndView(HISTORY_VIEW, model, HttpStatus.OK);
     }
@@ -127,9 +127,9 @@ public class HistoryController {
         model.put("year", year);
         model.put("month", month);
         model.put("day", day);
-        model.put("constant", parserDataForGUI);
+        model.put("parserDataForGUI", parserDataForGUI);
         model.put("currentParserName", currentParserName);
-        model.put("constantsList", constantsList);
+        model.put("parserDataForGUIList", parserDataForGUIList);
         return new ModelAndView(HISTORY_VIEW, model, HttpStatus.OK);
     }
 
@@ -146,16 +146,16 @@ public class HistoryController {
         model.put("from", from);
         model.put("to", to);
         model.put("maxResults", maxResults);
-        model.put("constant", parserDataForGUI);
+        model.put("parserDataForGUI", parserDataForGUI);
         model.put("currentParserName", currentParserName);
-        model.put("constantsList", constantsList);
+        model.put("parserDataForGUIList", parserDataForGUIList);
         return new ModelAndView(HISTORY_VIEW, model, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/history/{client}/custom")
     public ModelAndView customIndex(@PathVariable("client") String client, @RequestParam("from") String from,
                                     @RequestParam("to") String to, @RequestParam("maxResults") int maxResults) throws ParseException {
-        return getDataAndViewCustom(client, constantsList.get(0), from, to, maxResults, nameOfFirstConstant);
+        return getDataAndViewCustom(client, parserDataForGUIList.get(0), from, to, maxResults, nameOfFirstConstant);
     }
 
     @RequestMapping(path = "/history/{client}/custom/{parserName}")
@@ -167,7 +167,7 @@ public class HistoryController {
     }
 
     private ParserDataForGUI getConstantByName(String name) {
-        return constantsList
+        return parserDataForGUIList
                 .stream()
                 .filter(item -> item.getClass().getSimpleName().equals(name))
                 .findFirst()

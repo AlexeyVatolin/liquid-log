@@ -4,7 +4,6 @@
 <%@ page import="ru.naumen.perfhouse.parser.constants.DefaultConstants" %>
 <%@ page import="java.util.*" %>
 <%@ page import="ru.naumen.perfhouse.parser.constants.SeriesInfo" %>
-<%@ page import="java.util.stream.Collectors" %>
 <%@ page import="static ru.naumen.perfhouse.controllers.utils.ArrayUtils.getArrayString" %>
 <%@ page import="static ru.naumen.perfhouse.controllers.utils.ArrayUtils.getTwoValuesArrayString" %>
 
@@ -26,11 +25,11 @@
 
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
-    List<TableTitle> tableTitleList = ((ParserDataForGUI) request.getAttribute("parserDataForGUI")).getTableTitles();
-    List<SeriesInfo> seriesTitleList = ((ParserDataForGUI) request.getAttribute("parserDataForGUI")).getSeriesInfo();
-    List<ParserDataForGUI> constantsList = (List<ParserDataForGUI>) request.getAttribute("constantsList");
-    String currentParserName = (String) request.getAttribute("currentParserName");
     ParserDataForGUI parserDataForGUI = (ParserDataForGUI) request.getAttribute("parserDataForGUI");
+    List<TableTitle> tableTitleList = parserDataForGUI.getTableTitles();
+    List<SeriesInfo> seriesTitleList = parserDataForGUI.getSeriesInfo();
+    List<ParserDataForGUI> parserDataForGUIList = (List<ParserDataForGUI>) request.getAttribute("parserDataForGUIList");
+    String currentParserName = (String) request.getAttribute("currentParserName");
 
     //Заполнением массива времени. Рассчитывается, что для каждого пасера в данных должно приходить время
     List<Date> datesList = new ArrayList<>();
@@ -99,7 +98,7 @@
     </p>
     <ul class="nav nav-pills">
         <!-- Создание кнопок, по которым можно перейти к другим парсерам -->
-        <% for (ParserDataForGUI myParserDataForGUI : constantsList) {
+        <% for (ParserDataForGUI myParserDataForGUI : parserDataForGUIList) {
             if (myParserDataForGUI.getClass().getSimpleName().equals(currentParserName)) {
         %>
         <li class="nav-item"><a class="nav-link active"><%= myParserDataForGUI.getName()%>
