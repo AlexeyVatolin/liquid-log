@@ -61,9 +61,9 @@
                    href='<%= ((Map)request.getAttribute("prevMonthLinks")).get(client) %>'>Previous Month</a>
                 <a class="btn btn-outline-primary" href='<%= ((Map)request.getAttribute("monthlinks")).get(client) %>'>Month</a>
                 <a class="btn btn-outline-primary"
-                   href='<%= ((Map)request.getAttribute("last2016links")).get(client) %>'>Last 7 days</a>
+                   href='<%= ((Map)request.getAttribute("lastWeeklinks")).get(client) %>'>Last 7 days</a>
                 <a class="btn btn-outline-primary"
-                   href='<%= ((Map)request.getAttribute("last864links")).get(client) %>'>Last 3 days</a>
+                   href='<%= ((Map)request.getAttribute("last3Dayslinks")).get(client) %>'>Last 3 days</a>
                 <a class="btn btn-outline-primary" href='<%= ((Map)request.getAttribute("links")).get(client) %>'>Yesterday</a>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#customModal"
                         onclick="setupModal('<%=client %>')">Custom request

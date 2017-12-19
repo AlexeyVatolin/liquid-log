@@ -74,8 +74,8 @@ public class ClientsController
         model.put("clients", clients);
         model.put("links", clientLinks);
         model.put("monthlinks", clientMonthLinks);
-        model.put("last864links", clientLast3DaysLinks);
-        model.put("last2016links", clientLastWeekLinks);
+        model.put("last3Dayslinks", clientLast3DaysLinks);
+        model.put("lastWeeklinks", clientLastWeekLinks);
         model.put("prevMonthLinks", clientPreviousMonthLinks);
         model.put("availableParsers", availableParsers);
 
