@@ -2,7 +2,9 @@ package ru.naumen.perfhouse.parser.constants;
 
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 import static ru.naumen.perfhouse.parser.constants.DefaultConstants.TIME;
 
 @Service

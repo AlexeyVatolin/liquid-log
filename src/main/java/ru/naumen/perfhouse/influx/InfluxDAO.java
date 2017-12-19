@@ -4,10 +4,6 @@ import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.QueryResult;
 import org.json.JSONObject;
-import ru.naumen.perfhouse.parser.data.ActionDoneData;
-import ru.naumen.perfhouse.parser.data.ErrorData;
-import ru.naumen.perfhouse.parser.data.GCData;
-import ru.naumen.perfhouse.parser.data.TopData;
 
 import java.util.List;
 

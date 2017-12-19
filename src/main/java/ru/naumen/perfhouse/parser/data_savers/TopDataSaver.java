@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.constants.DefaultConstants;
 import ru.naumen.perfhouse.parser.data.TopData;
+
 import java.util.concurrent.TimeUnit;
+
 import static ru.naumen.perfhouse.parser.constants.Top.*;
 
 @Service

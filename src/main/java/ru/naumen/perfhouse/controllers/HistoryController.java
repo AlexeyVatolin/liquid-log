@@ -1,8 +1,5 @@
 package ru.naumen.perfhouse.controllers;
 
-import java.text.ParseException;
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,6 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.naumen.perfhouse.parser.constants.ParserDataForGUI;
 import ru.naumen.perfhouse.statdata.StatData;
 import ru.naumen.perfhouse.statdata.StatDataService;
+
+import java.text.ParseException;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by doki on 23.10.16.

@@ -11,6 +11,7 @@ public class GCParser implements DataParser<GCData>
 {
     private static final Pattern gcExecutionTime = Pattern.compile(".*real=(.*)secs.*");
 
+    @Override
     public void parseLine(GCData dataSet, String line)
     {
         Matcher matcher = gcExecutionTime.matcher(line);

@@ -1,23 +1,21 @@
 package ru.naumen.perfhouse.statdata;
 
+import com.google.common.base.Joiner;
+import org.influxdb.dto.QueryResult.Series;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.naumen.perfhouse.influx.InfluxDAO;
+import ru.naumen.perfhouse.parser.constants.DefaultConstants;
+import ru.naumen.perfhouse.parser.constants.ParserDataForGUI;
+import ru.naumen.perfhouse.statdata.influx.InfluxDateHelper;
+import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
-
-import org.influxdb.dto.QueryResult.Series;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.google.common.base.Joiner;
-
-import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.perfhouse.parser.constants.ParserDataForGUI;
-import ru.naumen.perfhouse.parser.constants.DefaultConstants;
-import ru.naumen.perfhouse.statdata.influx.InfluxDateHelper;
-import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
 
 /**
  * Component for getting data from influx

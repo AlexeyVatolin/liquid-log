@@ -13,6 +13,7 @@ public class SeriesInfo {
 
     public SeriesInfo(String name, String dataName) {
         this.name = name;
+        this.unit = "";
         this.dataName = dataName;
     }
 

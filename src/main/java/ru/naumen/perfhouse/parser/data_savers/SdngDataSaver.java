@@ -8,7 +8,9 @@ import ru.naumen.perfhouse.parser.constants.DefaultConstants;
 import ru.naumen.perfhouse.parser.data.ActionDoneData;
 import ru.naumen.perfhouse.parser.data.ErrorData;
 import ru.naumen.perfhouse.parser.data.SdngData;
+
 import java.util.concurrent.TimeUnit;
+
 import static ru.naumen.perfhouse.parser.constants.PerformedActions.*;
 import static ru.naumen.perfhouse.parser.constants.ResponseTimes.*;
 
