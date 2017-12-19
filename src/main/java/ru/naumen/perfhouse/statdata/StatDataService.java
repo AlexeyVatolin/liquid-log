@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Joiner;
 
 import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.perfhouse.parser.constants.Constant;
+import ru.naumen.perfhouse.parser.constants.ParserDataForGUI;
 import ru.naumen.perfhouse.parser.constants.DefaultConstants;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateHelper;
 import ru.naumen.perfhouse.statdata.influx.InfluxDateRange;
@@ -115,9 +115,9 @@ public class StatDataService
         return result;
     }
 
-    public StatData getData(String client, Constant constant, int maxResults) throws ParseException
+    public StatData getData(String client, ParserDataForGUI parserDataForGUI, int maxResults) throws ParseException
     {
-        Series result = influxDAO.executeQuery(client, prepareQuery(constant, maxResults));
+        Series result = influxDAO.executeQuery(client, prepareQuery(parserDataForGUI, maxResults));
         if (result == null)
         {
             return null;
@@ -126,9 +126,9 @@ public class StatDataService
         return createData(result);
     }
 
-    public StatData getDataCustom(String client, Constant constant, String from, String to) throws ParseException
+    public StatData getDataCustom(String client, ParserDataForGUI parserDataForGUI, String from, String to) throws ParseException
     {
-        if(constant == null)
+        if(parserDataForGUI == null)
         {
             return null;
         }
@@ -138,7 +138,7 @@ public class StatDataService
 
         String where = time + ">='" + utcRange.from() + "' and " + time + "<='" + utcRange.to() + "'";
 
-        String query = String.format(template, Joiner.on(',').join(constant.getTypeProperties()),
+        String query = String.format(template, Joiner.on(',').join(parserDataForGUI.getTypeProperties()),
                 DefaultConstants.MEASUREMENT_NAME, where, time);
 
         Series result = influxDAO.executeQuery(client, query);
@@ -149,13 +149,13 @@ public class StatDataService
         return createData(result);
     }
 
-    public StatData getDataDate(String client, Constant constant, int year, int month, int day) throws ParseException
+    public StatData getDataDate(String client, ParserDataForGUI parserDataForGUI, int year, int month, int day) throws ParseException
     {
-        if(constant == null)
+        if(parserDataForGUI == null)
         {
             return null;
         }
-        String q = prepareQueryDate(constant, year, month, day);
+        String q = prepareQueryDate(parserDataForGUI, year, month, day);
         Series result = influxDAO.executeQuery(client, q);
         if (result == null)
         {
@@ -186,18 +186,18 @@ public class StatDataService
         return data;
     }
 
-    private String prepareQuery(Constant constant, int count)
+    private String prepareQuery(ParserDataForGUI parserDataForGUI, int count)
     {
         String qTemp = "SELECT %s from %s ORDER BY %s DESC LIMIT %s";
-        return String.format(qTemp, Joiner.on(',').join(constant.getTypeProperties()), DefaultConstants.MEASUREMENT_NAME,
+        return String.format(qTemp, Joiner.on(',').join(parserDataForGUI.getTypeProperties()), DefaultConstants.MEASUREMENT_NAME,
                 DefaultConstants.TIME, count);
     }
 
-    private String prepareQueryDate(Constant constant, int year, int month, int day)
+    private String prepareQueryDate(ParserDataForGUI parserDataForGUI, int year, int month, int day)
     {
         String template = "SELECT %s from %s WHERE %s ORDER BY %s DESC";
 
-        return String.format(template, Joiner.on(',').join(constant.getTypeProperties()), DefaultConstants.MEASUREMENT_NAME,
+        return String.format(template, Joiner.on(',').join(parserDataForGUI.getTypeProperties()), DefaultConstants.MEASUREMENT_NAME,
                 prepareWhere(year, month, day), DefaultConstants.TIME);
     }
 

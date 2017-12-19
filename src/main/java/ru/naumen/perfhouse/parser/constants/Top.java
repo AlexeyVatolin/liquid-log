@@ -6,7 +6,7 @@ import java.util.List;
 import static ru.naumen.perfhouse.parser.constants.DefaultConstants.TIME;
 
 @Service
-public class Top implements Constant {
+public class Top implements ParserDataForGUI {
     public static final String AVG_LA = "avgLa";
     public static final String AVG_CPU = "avgCpu";
     public static final String AVG_MEM = "avgMem";
@@ -36,8 +36,7 @@ public class Top implements Constant {
 
     @Override
     public List<SeriesInfo> getSeriesInfo() {
-        return Lists.newArrayList(new SeriesInfo("Time", DefaultConstants.TIME),
-                new SeriesInfo("Average LA", AVG_LA),
+        return Lists.newArrayList(new SeriesInfo("Average LA", AVG_LA),
                 new SeriesInfo("Avarage CPU usage", AVG_CPU, "%"),
                 new SeriesInfo("Average MEM usage", AVG_MEM, "%"),
                 new SeriesInfo("Max LA", MAX_LA),
@@ -47,8 +46,7 @@ public class Top implements Constant {
 
     @Override
     public List<TableTitle> getTableTitles() {
-        return Lists.newArrayList(new TableTitle("Time", DefaultConstants.TIME),
-                new TableTitle("Avg LA", AVG_LA),
+        return Lists.newArrayList(new TableTitle("Avg LA", AVG_LA),
                 new TableTitle("Avg CPU,%", AVG_CPU),
                 new TableTitle("Avg MEM,%", AVG_MEM),
                 new TableTitle("Max LA", MAX_LA),

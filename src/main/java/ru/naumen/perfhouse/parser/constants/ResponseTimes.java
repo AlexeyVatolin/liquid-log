@@ -6,7 +6,7 @@ import java.util.List;
 import static ru.naumen.perfhouse.parser.constants.DefaultConstants.TIME;
 
 @Service
-public class ResponseTimes implements Constant {
+public class ResponseTimes implements ParserDataForGUI {
     public static final String PERCENTILE50 = "percent50";
     public static final String PERCENTILE95 = "percent95";
     public static final String PERCENTILE99 = "percent99";
@@ -40,8 +40,7 @@ public class ResponseTimes implements Constant {
 
     @Override
     public List<SeriesInfo> getSeriesInfo() {
-        return Lists.newArrayList(new SeriesInfo("Time", DefaultConstants.TIME),
-                new SeriesInfo("50%", PERCENTILE50),
+        return Lists.newArrayList(new SeriesInfo("50%", PERCENTILE50),
                 new SeriesInfo("95%", PERCENTILE95),
                 new SeriesInfo("99%", PERCENTILE99),
                 new SeriesInfo("99.9%", PERCENTILE999),
@@ -50,8 +49,7 @@ public class ResponseTimes implements Constant {
 
     @Override
     public List<TableTitle> getTableTitles() {
-        return Lists.newArrayList(new TableTitle("Time", DefaultConstants.TIME),
-                new TableTitle("Count", COUNT),
+        return Lists.newArrayList(new TableTitle("Count", COUNT),
                 new TableTitle("Errors", ERRORS),
                 new TableTitle("Mean", MEAN),
                 new TableTitle("Stddev", STDDEV),

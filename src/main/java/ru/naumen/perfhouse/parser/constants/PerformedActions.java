@@ -6,7 +6,7 @@ import java.util.List;
 import static ru.naumen.perfhouse.parser.constants.DefaultConstants.TIME;
 
 @Service
-public class PerformedActions implements Constant {
+public class PerformedActions implements ParserDataForGUI {
     public static final String ADD_ACTIONS = "addActions";
     public static final String EDIT_ACTIONS = "editActions";
     public static final String LIST_ACTIONS = "listActions";
@@ -40,8 +40,7 @@ public class PerformedActions implements Constant {
 
     @Override
     public List<SeriesInfo> getSeriesInfo() {
-        return Lists.newArrayList(new SeriesInfo("Time", DefaultConstants.TIME),
-                new SeriesInfo("AddObject", ADD_ACTIONS),
+        return Lists.newArrayList(new SeriesInfo("AddObject", ADD_ACTIONS),
                 new SeriesInfo("EditObject", EDIT_ACTIONS),
                 new SeriesInfo("GetList", LIST_ACTIONS),
                 new SeriesInfo("Comment", COMMENT_ACTIONS),
@@ -54,8 +53,7 @@ public class PerformedActions implements Constant {
 
     @Override
     public List<TableTitle> getTableTitles() {
-        return Lists.newArrayList(new TableTitle("Time", DefaultConstants.TIME),
-                new TableTitle("Summ", ACTIONS_COUNT),
+        return Lists.newArrayList(new TableTitle("Summ", ACTIONS_COUNT),
                 new TableTitle("AddObject", ADD_ACTIONS),
                 new TableTitle("EditObject", EDIT_ACTIONS),
                 new TableTitle("GetList", LIST_ACTIONS),

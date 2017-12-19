@@ -2,7 +2,7 @@ package ru.naumen.perfhouse.parser.constants;
 
 import java.util.List;
 
-public interface Constant {
+public interface ParserDataForGUI {
     List<String> getTypeProperties();
     String getName();
     String getChartTitle();
