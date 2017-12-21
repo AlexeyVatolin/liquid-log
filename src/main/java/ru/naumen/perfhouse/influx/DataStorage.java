@@ -1,7 +1,7 @@
 package ru.naumen.perfhouse.influx;
 
 import org.influxdb.dto.BatchPoints;
-import ru.naumen.perfhouse.parser.data.*;
+import ru.naumen.perfhouse.parser.data.Data;
 import ru.naumen.perfhouse.parser.data_savers.DataSaver;
 import ru.naumen.perfhouse.parser.factories.ParserFactory;
 

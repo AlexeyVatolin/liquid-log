@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import ru.naumen.perfhouse.influx.DataStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.perfhouse.parser.data.Data;
-import ru.naumen.perfhouse.parser.data_parsers.*;
+import ru.naumen.perfhouse.parser.data_parsers.DataParser;
 import ru.naumen.perfhouse.parser.data_savers.DataSaver;
-import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 import ru.naumen.perfhouse.parser.factories.ParserFactory;
+import ru.naumen.perfhouse.parser.time_parsers.TimeParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

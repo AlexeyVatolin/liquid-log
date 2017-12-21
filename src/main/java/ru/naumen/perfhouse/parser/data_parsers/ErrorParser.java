@@ -13,6 +13,7 @@ public class ErrorParser implements DataParser<SdngData>
     private static final Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) ERROR");
     private static final Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?] \\(.+?\\) FATAL");
 
+    @Override
     public void parseLine(SdngData dataSet, String line)
     {
         ErrorData errorData = dataSet.getErrorData();
